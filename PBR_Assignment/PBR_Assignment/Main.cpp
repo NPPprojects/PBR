@@ -190,11 +190,11 @@ int main()
 		  lightBoxes[i]->setPosition(positions[i]);
 		  //lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
 		  lightBoxes[i]->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
-		  std::cout << glm::to_string(lightBoxes[i]->getModelMatrix()) << std::endl;         
+		  std::cout << glm::to_string(lightBoxes[i]->getPosition()) << std::endl;         
     }
         for (int i = 0; i <= 1; i++)
         {
-          std::cout << glm::to_string(lightBoxes[i]->getModelMatrix()) << std::endl;
+          std::cout << glm::to_string(lightBoxes[i]->getPosition()) << std::endl;
         }
 
         //std::cout<<"Point 1"<< glm::to_string(lightBoxes.at(0)->getPosition()) << std::endl;
@@ -215,6 +215,7 @@ int main()
     positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
     positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
     nanosuit->setPointLightPos(positions, 1);
+//	nanosuit->setPointLightPos(lightBoxes, 1);
 	
 		for (int i = 0; i <= 1; i++)
 		{

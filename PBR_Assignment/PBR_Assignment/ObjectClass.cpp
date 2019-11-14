@@ -352,38 +352,21 @@ void ObjectClass::setShaderUniform()
 
 
 
+	std::string number;
+
+	for (int i = 0; i <= 4; i++)
+	{
+		number = std::to_string(i);
+		objectShader->setVec3("pointLights[" + number + "].position", pointLightPos[i]);
+		objectShader->setVec3("pointLights[" + number + "].ambient", 0.05f, 0.05f, 0.05f);
+		objectShader->setVec3("pointLights[" + number + "].diffuse", 0.8f, 0.8f, 0.8f);
+		objectShader->setVec3("pointLights[" + number + "].specular", 1.0f, 1.0f, 1.0f);
+		objectShader->setFloat("pointLights[" + number + "].constant", 1.0f);
+		objectShader->setFloat("pointLights[" + number + "].linear", 0.09);
+		objectShader->setFloat("pointLights[" + number + "].quadratic", 0.032);
+	}
+	// point light 2
     
-    objectShader->setVec3("pointLights[0].position", pointLightPos[0]);
-    objectShader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
-    objectShader->setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
-    objectShader->setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
-    objectShader->setFloat("pointLights[0].constant", 1.0f);
-    objectShader->setFloat("pointLights[0].linear", 0.09);
-    objectShader->setFloat("pointLights[0].quadratic", 0.032);
-    // point light 2
-    objectShader->setVec3("pointLights[1].position", pointLightPos[1]);
-    objectShader->setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
-    objectShader->setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
-    objectShader->setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
-    objectShader->setFloat("pointLights[1].constant", 1.0f);
-    objectShader->setFloat("pointLights[1].linear", 0.09);
-    objectShader->setFloat("pointLights[1].quadratic", 0.032);
-    // point light 3
-    objectShader->setVec3("pointLights[2].position", pointLightPos[2]);
-    objectShader->setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
-    objectShader->setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
-    objectShader->setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
-    objectShader->setFloat("pointLights[2].constant", 1.0f);
-    objectShader->setFloat("pointLights[2].linear", 0.09);
-    objectShader->setFloat("pointLights[2].quadratic", 0.032);
-    // point light 4
-    objectShader->setVec3("pointLights[3].position", pointLightPos[3]);
-    objectShader->setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
-    objectShader->setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
-    objectShader->setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
-    objectShader->setFloat("pointLights[3].constant", 1.0f);
-    objectShader->setFloat("pointLights[3].linear", 0.09);
-    objectShader->setFloat("pointLights[3].quadratic", 0.032);
   
 
 	objectShader->setMat4("projection", projection);
