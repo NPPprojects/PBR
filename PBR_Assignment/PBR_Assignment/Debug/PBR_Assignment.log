@@ -1,9 +1,1 @@
-﻿  Main.cpp
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(255): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(257): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(259): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(296): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gittest\pbr\pbr_assignment\pbr_assignment\main.cpp(303): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  PBR_Assignment.vcxproj -> H:\Year3Labs\GitTest\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+﻿  PBR_Assignment.vcxproj -> H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
