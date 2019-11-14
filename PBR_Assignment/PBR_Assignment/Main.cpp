@@ -1,7 +1,6 @@
 ///TO DO currently only way to obtain a location is via the model matrix
 
 
-#pragma once
 #include "stdafx.h"
 #include "CustomCursor.h"
 #include "Shader.h"
@@ -13,9 +12,9 @@
 
 
 //Memory Leaks
-#define _CRTDBG_MAP_ALLOC
+//#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
-#include <crtdbg.h>
+//#include <crtdbg.h>
 
 // Resize Function
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -76,11 +75,14 @@ int main()
 
 	//Initialise GLAD before OpenGL so that it can manage function pointers for OpenGL
 	//
+	glewInit();
+/*
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialise GLAD \n";
 		return -1;
 	}
+*/
 	// Configure global opengl state
 
 	glEnable(GL_DEPTH_TEST);
@@ -116,6 +118,8 @@ int main()
 	//	lightBoxes.push_back(PointLights);
 	//}
 
+	// TODO
+	// Dont use raw arrays. use std::array;
   std::shared_ptr<GameObject> lightBoxes[]= { PointLights,PointLights};
 
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
@@ -183,6 +187,9 @@ int main()
 		//	EmissionBoxes[i]->setRotation(Time * sin(2.5), glm::vec3(1.0f, 0.3f, 0.5f));
 		//	EmissionBoxes[i]->setLightPosition(LightBox);
 		//}
+
+	// TODO
+	// [] use .at()
 
         for (int i = 0; i <= 1; i++)
     {

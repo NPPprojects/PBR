@@ -280,7 +280,7 @@ void ObjectClass::initialiseVertexData()
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertexInduvidualData.size() * sizeof(vertexInduvidualData), &vertexInduvidualData.front(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexInduvidualData.size() * sizeof(vertexInduvidualData.at(0)), &vertexInduvidualData.at(0), GL_STATIC_DRAW);
 
 
 	// Set the vertex attributes pointers

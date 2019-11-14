@@ -99,6 +99,10 @@ protected:
 
 
 
+	// TODO:
+	// Never store matrix
+	// vec3 pos, rot, scale
+	// return glm::translate, glm::rotate x 3 (rot), glm::scale (scale)
   //Transformations
 	glm::mat4 transform;
 	glm::mat4 model;
