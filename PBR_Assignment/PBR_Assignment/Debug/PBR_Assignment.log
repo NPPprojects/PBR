@@ -1,0 +1,27 @@
+﻿  GameObject.cpp
+  Main.cpp
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(192): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(255): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(257): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(259): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(296): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\main.cpp(303): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ObjectClass.cpp
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(192): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(361): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(362): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(369): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(370): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(377): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(378): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(385): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(386): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr3\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(408): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR3\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
