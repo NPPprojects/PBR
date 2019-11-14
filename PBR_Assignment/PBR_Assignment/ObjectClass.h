@@ -77,6 +77,12 @@ public:
 
 	glm::vec3 getDirLightPos();
 
+	void setRotation(float _degree, glm::vec3 _rotation);
+
+	void setPosition(glm::vec3 _position);
+
+	void setScale(glm::vec3 _scale);
+
 
 private:
 	//Vertex Data Initialisation

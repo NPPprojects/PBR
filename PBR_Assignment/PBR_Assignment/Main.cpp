@@ -111,16 +111,12 @@ int main()
 
 
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
-	std::shared_ptr<GameObject> PointLights = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
-	//std::vector<std::shared_ptr<GameObject>> lightBoxes;
-	//for (int i = 0; i <= 1; i++)
-	//{
-	//	lightBoxes.push_back(PointLights);
-	//}
-
-	// TODO
-	// Dont use raw arrays. use std::array;
-  std::shared_ptr<GameObject> lightBoxes[]= { PointLights,PointLights};
+	//std::shared_ptr<GameObject> PointLights = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
+	std::vector<std::shared_ptr<ObjectClass>> lightBoxes;
+	for (int i = 0; i <= 1; i++)
+	{
+		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
+	}
 
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
 
@@ -141,7 +137,8 @@ int main()
 	//}
 
 	//Render Loop
-
+	// TODO
+	// Dont use raw arrays. use std::array;
 	glm::vec3 positions[] = {
 		glm::vec3(1.5409f,  0.248259f,  0.822887f),
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
@@ -191,18 +188,14 @@ int main()
 	// TODO
 	// [] use .at()
 
-        for (int i = 0; i <= 1; i++)
-    {
-          lightBoxes[i]->use3D();
-		  lightBoxes[i]->setPosition(positions[i]);
-		  //lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
-		  lightBoxes[i]->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
-		  std::cout << glm::to_string(lightBoxes[i]->getPosition()) << std::endl;         
-    }
-        for (int i = 0; i <= 1; i++)
-        {
-          std::cout << glm::to_string(lightBoxes[i]->getPosition()) << std::endl;
-        }
+		for (int i = 0; i <= 1; i++)
+		{
+			lightBoxes.at(i)->use3D();
+			lightBoxes.at(i)->setPosition(positions[i]);
+			//lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
+			lightBoxes.at(i)->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		}
+	
 
         //std::cout<<"Point 1"<< glm::to_string(lightBoxes.at(0)->getPosition()) << std::endl;
         //std::cout<<"Point 2"<< glm::to_string(lightBoxes.at(1)->getPosition()) << std::endl;
@@ -213,16 +206,16 @@ int main()
 		LightBox->setPosition(glm::vec3(1.8f , 0.90f, 1.0f));
 		LightBox->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 
-
-
+		
 		nanosuit->useModel();
 		nanosuit->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 		nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		nanosuit->setDirLightPos(LightBox);
+
     positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
     positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
-    nanosuit->setPointLightPos(positions, 1);
-//	nanosuit->setPointLightPos(lightBoxes, 1);
+//    nanosuit->setPointLightPos(positions, 1);
+	nanosuit->setPointLightPos(lightBoxes, 1);
 	
 		for (int i = 0; i <= 1; i++)
 		{
@@ -309,3 +302,5 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	FPScamera->ProcessMouseScroll(yoffset);
 }
+
+

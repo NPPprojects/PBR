@@ -407,3 +407,17 @@ glm::vec3 ObjectClass::getDirLightPos()
 {
 	return dirLightPos;
 }
+
+
+void ObjectClass::setRotation(float _degree, glm::vec3 _rotation)
+{
+	model = glm::rotate(model, _degree, _rotation);
+}
+void ObjectClass::setPosition(glm::vec3 _position)
+{
+	model = glm::translate(model, _position);
+}
+void ObjectClass::setScale(glm::vec3 _scale)
+{
+	model = glm::scale(model, _scale);
+}
