@@ -1,23 +1,10 @@
-﻿  Main.cpp
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(255): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(257): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(259): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(296): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\main.cpp(303): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
-glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+﻿  ObjectClass.cpp
+h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(175): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(322): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(323): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(351): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   PBR_Assignment.vcxproj -> H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

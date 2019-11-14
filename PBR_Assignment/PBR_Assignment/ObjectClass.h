@@ -39,11 +39,6 @@ public:
 
 	void useModel();
 
-	void setDirLightPos(std::shared_ptr<ObjectClass> _lightSrc);
-
-	void setPointLightPos(glm::vec3 _lightPositions[], int _AmountOfLights);
-
-	void setPointLightPos(std::vector<std::shared_ptr<ObjectClass>> _lightPositions, int _AmountOfLights);
 
 	
 
@@ -71,17 +66,11 @@ public:
 
 
 	//Debug Functions
-
-
 	glm::vec3 getPointLightPos(int index);
 
 	glm::vec3 getDirLightPos();
 
-	void setRotation(float _degree, glm::vec3 _rotation);
 
-	void setPosition(glm::vec3 _position);
-
-	void setScale(glm::vec3 _scale);
 
 
 private:

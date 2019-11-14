@@ -1,5 +1,3 @@
-///TO DO currently only way to obtain a location is via the model matrix
-
 
 #include "stdafx.h"
 #include "CustomCursor.h"
@@ -71,11 +69,13 @@ int main()
 	glfwSetScrollCallback(window, scroll_callback);
 
 	// tell GLFW to capture our mouse and disable the cursor
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	//Initialise GLAD before OpenGL so that it can manage function pointers for OpenGL
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//Initialise Glew before OpenGL so that it can manage function pointers for OpenGL
 	//
 	glewInit();
+
+	//Glad Function Pointers initialisation
 /*
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -84,35 +84,21 @@ int main()
 	}
 */
 	// Configure global opengl state
-
 	glEnable(GL_DEPTH_TEST);
-
-
 
 
 	//Custom Cursor
 	CustomCursor Yugioh_Cursor("resources/textures/YuGiOh Pyramid.png", window);
 
 	//Shader Program
-
-
 	std::shared_ptr<Shader> TextureShader3D = std::make_shared<Shader>("3DObjectShader.vert", "TextureShader.frag");
-
 	std::shared_ptr<Shader> ColorBoxShader = std::make_shared<Shader>("ColorBox.vert", "ColorBox.frag");
-
 	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
+	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
 
-	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
 	//Testing Shader
-
-	//Objects
-	//const char* textures1[] = { "resources/textures/Kaiba.png" };
-	//std::unique_ptr<GameObject> KaibaBox3dG = std::make_unique<GameObject>("Textured Cube.data", textures1, 1, TextureShader3D, FPScamera);
-
-
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
-	//std::shared_ptr<GameObject> PointLights = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
-	std::vector<std::shared_ptr<ObjectClass>> lightBoxes;
+	std::vector<std::shared_ptr<GameObject>> lightBoxes;
 	for (int i = 0; i <= 1; i++)
 	{
 		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
@@ -120,29 +106,18 @@ int main()
 
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
 
-	//Testing
-//	std::shared_ptr<Model> nanosuitTest = std::make_shared<Model>("resources/objects/nanosuit/nanosuit.obj");
-
-	const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
-
+	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
+	
 
-	////EmissionBoxes.reserve(8);
-	//std::shared_ptr<GameObject> ColorBox = std::make_shared<GameObject>("ColorBox.data", textures, 3, ColorBoxShader, FPScamera);
 
-	//for (int i = 0; i <= 3; i++)
-	//{
-	//	EmissionBoxes.push_back(ColorBox);
-
-	//}
-
-	//Render Loop
-	// TODO
 	// Dont use raw arrays. use std::array;
 	glm::vec3 positions[] = {
 		glm::vec3(1.5409f,  0.248259f,  0.822887f),
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
+
+	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
 		glm::vec3 tracker = FPScamera->GetPosition();
@@ -155,7 +130,6 @@ int main()
 
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-
 
 
 		//Input handling
@@ -177,16 +151,6 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
 
-		//for (int i = 0; i <= 3; i++)
-		//{
-		//	EmissionBoxes[i]->use3D();
-		//	EmissionBoxes[i]->setPosition(positions[i]);
-		//	EmissionBoxes[i]->setRotation(Time * sin(2.5), glm::vec3(1.0f, 0.3f, 0.5f));
-		//	EmissionBoxes[i]->setLightPosition(LightBox);
-		//}
-
-	// TODO
-	// [] use .at()
 
 		for (int i = 0; i <= 1; i++)
 		{
@@ -195,28 +159,21 @@ int main()
 			//lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
 			lightBoxes.at(i)->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 		}
-	
+		positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
+		positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
 
-        //std::cout<<"Point 1"<< glm::to_string(lightBoxes.at(0)->getPosition()) << std::endl;
-        //std::cout<<"Point 2"<< glm::to_string(lightBoxes.at(1)->getPosition()) << std::endl;
-        //std::cout << "Point 1Raw" << glm::to_string(positions[0]) << std::endl;
-        //std::cout << "Point 2Raw" << glm::to_string(positions[1]) << std::endl;
-    ///TODO LOOK IN TO VIRTUAL FUNCTIONS
+
+ 
 		LightBox->use3D();
-		LightBox->setPosition(glm::vec3(1.8f , 0.90f, 1.0f));
+		LightBox->setPosition(glm::vec3(1.8f*sin(Time) , 0.90f, 1.0f*cos(Time)));
 		LightBox->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 
 		
 		nanosuit->useModel();
 		nanosuit->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 		nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
-		nanosuit->setDirLightPos(LightBox);
-
-    positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
-    positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
-//    nanosuit->setPointLightPos(positions, 1);
-	nanosuit->setPointLightPos(lightBoxes, 1);
-	
+		nanosuit->setDirLightPos(LightBox);  
+		nanosuit->setPointLightPos(lightBoxes, 1);
 		for (int i = 0; i <= 1; i++)
 		{
 	//		std::cout << glm::to_string(nanosuit->getPointLightPos(i)) << std::endl;
@@ -247,8 +204,6 @@ void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
-
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		FPScamera->ProcessKeyboard(FPScamera->FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)

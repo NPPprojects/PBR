@@ -45,11 +45,18 @@ glm::mat4 GameObject::getModelMatrix()
   return model;
 }
 
+void GameObject::setDirLightPos(std::shared_ptr<GameObject> _lightSrc)
+{
+	glm::vec3 _Temp = glm::vec3(_lightSrc->getPosition());
+	dirLightPos = _Temp;
+}
 
+void GameObject::setPointLightPos(std::vector<std::shared_ptr<GameObject>> _lightPositions, int _AmountOfLights)
+{
 
-///TODo
+	for (int i = 0; i <= _AmountOfLights; i++)
+	{
+		pointLightPos[i] = _lightPositions[i]->getPosition();
+	}
+}
 
-//Step 1 
-//3 Vectors
-//Only values the game Objects stores 
-//Constructs them off the class

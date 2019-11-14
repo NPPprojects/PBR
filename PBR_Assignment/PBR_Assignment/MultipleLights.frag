@@ -25,7 +25,6 @@ struct PointLight{
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
-
 };
 
 
@@ -54,12 +53,6 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     
-    // == =====================================================
-    // Our lighting is set up in 2 phases: directional and point lights
-    // For each phase, a calculate function is defined that calculates the corresponding color
-    // per lamp. In the main() function we take all the calculated colors and sum them up for
-    // this fragment's final color.
-    // == =====================================================
     // phase 1: directional lighting
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point lights

@@ -135,18 +135,6 @@ void ObjectClass::use3D()
 
 void ObjectClass::useModel()
 {
-	/*
-	model = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)1920 / (float)1080, 0.1f, 100.0f);
-	view = camera->GetViewMatrix();
-
-	setShaderUniform();
-	objectShader->use();
-	objModel->Draw(objectShader);	
-	*/
-
-
-
 	objectShader->use();
 	
 	setShaderUniform();
@@ -154,12 +142,7 @@ void ObjectClass::useModel()
 	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)1920 / (float)1080, 0.1f, 100.0f);
 	view = camera->GetViewMatrix();
 
-	
-
-	model = glm::mat4(1.0f);
-	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
-	
+	model = glm::mat4(1.0f);	
 	objModel->Draw(objectShader);
 }
 
@@ -203,8 +186,8 @@ void ObjectClass::splitStringWhitespace(std::string& input, std::vector<std::str
 	for (size_t i = 0; i < input.length(); i++)
 	{
 		if (input.at(i) == ' ' ||
-			input.at(i) == ' f ' ||
-			input.at(i) == ' , ' ||
+			input.at(i) == 'f' ||
+			input.at(i) == ',' ||
 			input.at(i) == '\r' ||
 			input.at(i) == '\n' ||
 			input.at(i) == '\t')
@@ -288,11 +271,7 @@ void ObjectClass::initialiseVertexData()
 	{
 
 		glVertexAttribPointer(i, vertexPrValue[i], GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)((SkipCounter) * sizeof(float)));
-	//	std::cout << vertexPrValue[i] << " vertexPrValue" << std::endl;
-	//	std::cout << stride << " stride" << std::endl;
-	//	std::cout << SkipCounter << " Skip Counter" << std::endl;
 		SkipCounter = SkipCounter + vertexPrValue[i];
-
 		glEnableVertexAttribArray(i);
 	}
 }
@@ -311,28 +290,9 @@ void ObjectClass::applyTransformation(glm::vec3 _position)
 {
 	initialiseTransformations();
 	transform = glm::translate(transform, _position);
+}
 
-}
-void ObjectClass::setDirLightPos(std::shared_ptr<ObjectClass> _lightSrc)
-{
-	dirLightPos = glm::vec3(_lightSrc->getPosition());
-	
-}
-void ObjectClass::setPointLightPos(glm::vec3 _lightPositions[], int _AmountOfLights)
-{
-	for (int i = 0; i <= _AmountOfLights; i++)
-	{
-		pointLightPos[i] = _lightPositions[i];
-	}
-}
-void ObjectClass::setPointLightPos(std::vector<std::shared_ptr<ObjectClass>> _lightPositions, int _AmountOfLights)
-{
-	
-	for (int i = 0; i <= _AmountOfLights; i++)
-	{
-		pointLightPos[i] = _lightPositions[i]->getPosition();
-	}
-}
+
 glm::mat4 ObjectClass::getModel()
 {
 	return model;
@@ -340,9 +300,6 @@ glm::mat4 ObjectClass::getModel()
 
 void ObjectClass::setShaderUniform()
 {
-	for (int i = 0; i <= 3; i++)
-
-
 	objectShader->setVec3("LightColor", 1.0f, 1.0f, 1.0f);
 	// directional light
 	objectShader->setVec3("dirLight.direction", dirLightPos);
@@ -353,7 +310,7 @@ void ObjectClass::setShaderUniform()
 
 
 	std::string number;
-
+	//Point Lights
 	for (int i = 0; i <= 4; i++)
 	{
 		number = std::to_string(i);
@@ -365,29 +322,32 @@ void ObjectClass::setShaderUniform()
 		objectShader->setFloat("pointLights[" + number + "].linear", 0.09);
 		objectShader->setFloat("pointLights[" + number + "].quadratic", 0.032);
 	}
-	// point light 2
-    
+	
   
-
+	//Projection matrix
 	objectShader->setMat4("projection", projection);
-
+	//View Matrix
 	objectShader->setMat4("view", view);
-
+	//Transformation Matrix
 	objectShader->setMat4("transform", transform);
-
+	//Model Matrix
 	objectShader->setMat4("model", model);
-
+	//directional light position
 	objectShader->setVec3("light.position", dirLightPos);
-
+	//directional light Values
+	objectShader->setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+	objectShader->setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
+	objectShader->setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+	//camera position
 	objectShader->setVec3("viewPosition", camera->GetPosition());
-
+	//material values
 	objectShader->setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
 	objectShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
 	objectShader->setFloat("material.shininess", 32.0f);
 	objectShader->setInt("material.diffuse", 0);
 	objectShader->setInt("material.specular", 1);
 	objectShader->setInt("material.emission", 2);
-
+	//time value
 	objectShader->setFloat("time", glfwGetTime());
 }
 
@@ -409,15 +369,3 @@ glm::vec3 ObjectClass::getDirLightPos()
 }
 
 
-void ObjectClass::setRotation(float _degree, glm::vec3 _rotation)
-{
-	model = glm::rotate(model, _degree, _rotation);
-}
-void ObjectClass::setPosition(glm::vec3 _position)
-{
-	model = glm::translate(model, _position);
-}
-void ObjectClass::setScale(glm::vec3 _scale)
-{
-	model = glm::scale(model, _scale);
-}
