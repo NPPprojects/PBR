@@ -45,10 +45,10 @@ uniform PointLight pointLights[NR_POINT_LIGHTS];
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
-float LinearizeDepth(float depth);
 
-float near = 10.0; 
-float far  = 1.0; 
+
+float near = 1.0; 
+float far  = 50.0; 
 
 void main()
 {
@@ -57,15 +57,17 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
     //non linear depth
 	
-    float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far
+    
     
 	// phase 1: directional lighting
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point lights
-    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+    for(int i = 0; i < NR_POINT_LIGHTS; i++){
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);    
+		}
 
-    FragColor = vec4(result*vec3(depth), 1.0);
+    
+    FragColor = vec4(result, 1.0);
 } 
 
 
@@ -107,9 +109,3 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     return (ambient + diffuse + specular);
 }
 
-
-float LinearizeDepth(float depth) 
-{
-    float z = depth * 2.0 - 1.0; // back to NDC 
-    return (2.0 * near * far) / (far + near - z * (far - near));	
-}

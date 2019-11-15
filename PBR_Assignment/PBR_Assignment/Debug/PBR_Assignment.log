@@ -1,1 +1,9 @@
-﻿  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+﻿  Main.cpp
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(211): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(213): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(215): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(217): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(254): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\deletethis\pbr\pbr_assignment\pbr_assignment\main.cpp(261): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PBR_Assignment.vcxproj -> D:\DeleteThis\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

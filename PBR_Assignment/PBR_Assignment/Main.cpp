@@ -85,8 +85,11 @@ int main()
 */
 	// Enabling Depth Testing so that fragments that are behind other objects don't get drawn
 	glEnable(GL_DEPTH_TEST);
-
-
+	//Enable stencil Testing
+	glEnable(GL_STENCIL_TEST);
+	//Enable Face Culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 	//Custom Cursor
 	CustomCursor Yugioh_Cursor("resources/textures/YuGiOh Pyramid.png", window);
 
@@ -148,7 +151,7 @@ int main()
 
 		//Render
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // also clear the depth buffer now!
 
 
 
