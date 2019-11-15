@@ -94,8 +94,8 @@ int main()
 	std::shared_ptr<Shader> TextureShader3D = std::make_shared<Shader>("3DObjectShader.vert", "TextureShader.frag");
 	std::shared_ptr<Shader> ColorBoxShader = std::make_shared<Shader>("ColorBox.vert", "ColorBox.frag");
 	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
-	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
-
+	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
+  std::shared_ptr<Shader> nanosuitShader1 = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
 	//Testing Shader
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;

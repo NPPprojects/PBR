@@ -303,7 +303,7 @@ void ObjectClass::setShaderUniform()
 	objectShader->setVec3("LightColor", 1.0f, 1.0f, 1.0f);
 	// directional light
 	objectShader->setVec3("dirLight.direction", dirLightPos);
-	objectShader->setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+	objectShader->setVec3("dirLight.ambient", 0.2f, 0.2f, 0.2f);
 	objectShader->setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
 	objectShader->setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 

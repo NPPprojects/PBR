@@ -1,10 +1,10 @@
 ﻿  ObjectClass.cpp
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(175): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+d:\year3projects\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(175): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=float
           ]
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(322): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(323): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\gitstatus\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(351): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  PBR_Assignment.vcxproj -> H:\Year3Labs\GitStatus\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+d:\year3projects\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(322): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\year3projects\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(323): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\year3projects\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(351): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PBR_Assignment.vcxproj -> D:\Year3Projects\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
