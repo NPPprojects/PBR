@@ -86,10 +86,9 @@ int main()
 	// Enabling Depth Testing so that fragments that are behind other objects don't get drawn
 	glEnable(GL_DEPTH_TEST);
 	//Enable stencil Testing
-	glEnable(GL_STENCIL_TEST);
 	//Enable Face Culling
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	
 	//Custom Cursor
 	CustomCursor Yugioh_Cursor("resources/textures/YuGiOh Pyramid.png", window);
 
@@ -99,6 +98,7 @@ int main()
 	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
 	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
 	std::shared_ptr<Shader> nanosuitShader1 = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
+	
 	//Testing Shader
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;
@@ -106,20 +106,53 @@ int main()
 	{
 		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
 	}
+	
 
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
 
 	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
 	
-
-
 	// Dont use raw arrays. use std::array;
 	glm::vec3 positions[] = {
 		glm::vec3(1.5409f,  0.248259f,  0.822887f),
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
 
+	
+
+	//FrameBuffer
+	unsigned int fbo;
+	//activate buffer
+	glGenFramebuffers(1, &fbo);
+	//Bind FBO
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	//generate texture
+	unsigned int texColorBuffer;
+	glGenTextures(1, &texColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// attach it to currently bound framebuffer object
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+	//RenderBuffer Object
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
+	//Unbind after Allocating enough storage
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	//attach the renderbuffer object to the depth and stencil attachment
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+	//Exception handling in case it fails
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+	//Unbind Framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -149,11 +182,17 @@ int main()
 		}
 		processInput(window);
 
-		//Render
+		// render
+		// ------
+		// bind to framebuffer and draw scene as we normally would to color texture 
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+
+
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // also clear the depth buffer now!
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
-
+	
 
 		for (int i = 0; i <= 1; i++)
 		{
@@ -183,6 +222,10 @@ int main()
       
 		}
 		
+
+
+
+
 		//swap buffers and poll IO events key pressed/released, mosuse moved etc.
 		glfwSwapBuffers(window);
 		glfwPollEvents();
