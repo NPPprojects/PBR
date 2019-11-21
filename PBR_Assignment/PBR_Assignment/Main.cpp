@@ -7,7 +7,7 @@
 #include "CameraObject.h"
 #include "Model.h";
 #include "glm/ext.hpp"
-
+#include "FrameBuffer.h"
 
 //Memory Leaks
 //#define _CRTDBG_MAP_ALLOC
@@ -98,7 +98,7 @@ int main()
 	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
 	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
 	std::shared_ptr<Shader> nanosuitShader1 = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
-	
+	std::shared_ptr<Shader> frameBufferShader = std::make_shared<Shader>("framebufferScreen.vert", "framebufferScreen.frag");
 	//Testing Shader
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;
@@ -109,6 +109,7 @@ int main()
 	
 
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
+	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
 
 	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
@@ -119,40 +120,6 @@ int main()
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
 
-	
-
-	//FrameBuffer
-	unsigned int fbo;
-	//activate buffer
-	glGenFramebuffers(1, &fbo);
-	//Bind FBO
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	//generate texture
-	unsigned int texColorBuffer;
-	glGenTextures(1, &texColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
-	//RenderBuffer Object
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
-	//Unbind after Allocating enough storage
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-	//attach the renderbuffer object to the depth and stencil attachment
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-	//Exception handling in case it fails
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-	//Unbind Framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -161,7 +128,7 @@ int main()
 		std::cout << "Up/Down: " << FPScamera->getPitch() << "      " << "Left//Right: " << FPScamera->getYaw() << std::endl;
 		//std::cout << FPScamera->getPitch() << "Left//Right" << std::endl;
 		//Timer
-
+		std::cout << glfwGetTime()<<std::endl;
 		double currentFrame = glfwGetTime();
 
 		deltaTime = currentFrame - lastFrame;
@@ -185,13 +152,11 @@ int main()
 		// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-
+		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
 
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
-
+		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
 	
 
 		for (int i = 0; i <= 1; i++)
@@ -216,11 +181,16 @@ int main()
 		nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		nanosuit->setDirLightPos(LightBox);  
 		nanosuit->setPointLightPos(lightBoxes, 1);
-		for (int i = 0; i <= 1; i++)
-		{
-	//		std::cout << glm::to_string(nanosuit->getPointLightPos(i)) << std::endl;
-      
-		}
+		
+		// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+		// clear all relevant buffers
+		glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// use the color attachment texture as the texture of the quad plane
+		frameBuffer->use();
 		
 
 

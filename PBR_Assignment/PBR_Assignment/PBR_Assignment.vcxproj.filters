@@ -54,6 +54,15 @@
     <None Include="MultipleLights.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="framebufferScreen.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="framebufferScreen.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="framebufferScreen.data">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -89,6 +98,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraObject.h">
@@ -116,6 +128,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

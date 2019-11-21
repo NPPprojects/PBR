@@ -77,7 +77,6 @@ private:
 	//Vertex Data Initialisation
 	unsigned int VBO, VAO; //Vertex Buffer Object, Vertex Array Object
 	int attributeTypeCount; //Counter for amount of Attributes
-	int verteciesCount; //Amount of vertecies in an object
 	int stride;     //The stride
 	std::ifstream vertexData; //VertexDataFile
 	int totalVertexFloatCount;       //Total Vertex Amount
@@ -89,6 +88,9 @@ private:
 	void readVertexData(const char*);
 	void initialiseVertexData();         //set up vertex data (and buffer(s)) and configure vertex attributes
 protected:
+
+	int verteciesCount; //Amount of vertecies in an object
+
 	//Textures
 	unsigned int texture[8]; //Texture Of Object
 

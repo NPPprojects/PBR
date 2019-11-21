@@ -349,6 +349,9 @@ void ObjectClass::setShaderUniform()
 	objectShader->setInt("material.emission", 2);
 	//time value
 	objectShader->setFloat("time", glfwGetTime());
+
+	//FrameBuffer
+	objectShader->setInt("screenTexture", 0);
 }
 
 glm::vec3 ObjectClass::getPosition()
