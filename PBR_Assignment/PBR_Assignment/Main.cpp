@@ -42,6 +42,7 @@ float Temp_Test = 0.0f; //Value for testing
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+int loadCubemap(std::vector<std::string> _textures);
 
 int main()
 {
@@ -99,6 +100,7 @@ int main()
 	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
 	std::shared_ptr<Shader> nanosuitShader1 = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
 	std::shared_ptr<Shader> frameBufferShader = std::make_shared<Shader>("framebufferScreen.vert", "framebufferScreen.frag");
+	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
 	//Testing Shader
 	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;
@@ -120,6 +122,75 @@ int main()
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
 
+	
+	//Loading a skybox
+	float skyboxVertices[] = {
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	// skybox VAO
+	unsigned int skyboxVAO, skyboxVBO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	// load textures
+	// -------------
+
+	std::vector<std::string> faces
+	{
+		("resources/textures/skybox/right.jpg"),
+		("resources/textures/skybox/left.jpg"),
+		("resources/textures/skybox/top.jpg"),
+		("resources/textures/skybox/bottom.jpg"),
+		("resources/textures/skybox/front.jpg"),
+		("resources/textures/skybox/back.jpg")
+	};
+	unsigned int cubemapTexture = loadCubemap(faces);
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -152,7 +223,7 @@ int main()
 		// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
-		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
+		//glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
 
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
@@ -182,16 +253,31 @@ int main()
 		nanosuit->setDirLightPos(LightBox);  
 		nanosuit->setPointLightPos(lightBoxes, 1);
 		
+		// draw skybox as last
+		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+		cubeMapSkyboxShader->use();
+		glm::mat4 view = glm::mat4(glm::mat3(FPScamera->GetViewMatrix())); // remove translation from the view matrix
+		cubeMapSkyboxShader->setMat4("view", view);
+		// skybox cube
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // set depth function back to default
+
+
 		// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+	//	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//	//glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
 		// clear all relevant buffers
-		glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-		glClear(GL_COLOR_BUFFER_BIT);
+	////	glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+	////	glClear(GL_COLOR_BUFFER_BIT);
 
 		// use the color attachment texture as the texture of the quad plane
-		frameBuffer->use();
+	////	frameBuffer->use();
 		
+
 
 
 
@@ -275,3 +361,34 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 
+int loadCubemap(std::vector<std::string> _textures)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	//Setting up faces of cubes
+	int width, height, nrChannel;
+
+	for (int i = 0; i < _textures.size(); i++)   //Iterate through each texture
+	{
+		unsigned char *data = stbi_load(_textures[i].c_str(), &width, &height, &nrChannel, 0);
+			if (data)
+			{
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+				stbi_image_free(data);
+			}
+			else
+			{
+				std::cout << "Cubemap texture failed to load at path: " << _textures[i] << std::endl;
+				stbi_image_free(data);
+			}
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+		return textureID;
+	}
+}

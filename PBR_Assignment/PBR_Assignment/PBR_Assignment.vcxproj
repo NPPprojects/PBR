@@ -125,6 +125,9 @@
     <None Include="ColorBox.data" />
     <None Include="ColorBox.frag" />
     <None Include="ColorBox.vert" />
+    <None Include="cubemapSkybox.data" />
+    <None Include="cubemapSkybox.frag" />
+    <None Include="cubemapSkybox.vert" />
     <None Include="framebufferScreen.data" />
     <None Include="framebufferScreen.frag" />
     <None Include="framebufferScreen.vert" />

@@ -352,6 +352,9 @@ void ObjectClass::setShaderUniform()
 
 	//FrameBuffer
 	objectShader->setInt("screenTexture", 0);
+
+	//Skybox 
+	objectShader->setInt("skybox", 1);
 }
 
 glm::vec3 ObjectClass::getPosition()

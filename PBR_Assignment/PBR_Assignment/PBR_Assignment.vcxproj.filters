@@ -63,6 +63,15 @@
     <None Include="framebufferScreen.data">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="cubemapSkybox.data">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cubemapSkybox.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cubemapSkybox.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
