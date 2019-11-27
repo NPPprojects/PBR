@@ -139,7 +139,7 @@ void ObjectClass::useModel()
 	
 	setShaderUniform();
 
-	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)1920 / (float)1080, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
 	view = camera->GetViewMatrix();
 
 	model = glm::mat4(1.0f);	

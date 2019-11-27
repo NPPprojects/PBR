@@ -152,6 +152,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ObjectClass.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ObjectClass.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

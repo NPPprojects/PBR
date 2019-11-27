@@ -261,7 +261,9 @@ int main()
 		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 		cubeMapSkyboxShader->use();
 		view = glm::mat4(glm::mat3(FPScamera->GetViewMatrix())); // remove translation from the view matrix
+	//	glm::mat4 projection = glm::perspective(glm::radians(FPScamera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
 		cubeMapSkyboxShader->setMat4("view", view);
+//		cubeMapSkyboxShader->setMat4("projection", projection);
 		// skybox cube
 		glBindVertexArray(skyboxVAO);
 		glActiveTexture(GL_TEXTURE0);
