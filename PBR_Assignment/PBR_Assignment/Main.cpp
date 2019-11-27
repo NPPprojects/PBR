@@ -178,6 +178,7 @@ int main()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+
 	// load textures
 	// -------------
 
@@ -191,6 +192,8 @@ int main()
 		("resources/textures/skybox/back.jpg")
 	};
 	unsigned int cubemapTexture = loadCubemap(faces);
+
+	cubeMapSkyboxShader->setInt("skybox", 0);
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -240,7 +243,7 @@ int main()
 		positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
 		positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
 
-
+		
  
 		LightBox->use3D();
 		LightBox->setPosition(glm::vec3(1.8f*sin(Time) , 0.90f, 1.0f*cos(Time)));
@@ -253,10 +256,11 @@ int main()
 		nanosuit->setDirLightPos(LightBox);  
 		nanosuit->setPointLightPos(lightBoxes, 1);
 		
+		glm::mat4 view = FPScamera->GetViewMatrix();
 		// draw skybox as last
 		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 		cubeMapSkyboxShader->use();
-		glm::mat4 view = glm::mat4(glm::mat3(FPScamera->GetViewMatrix())); // remove translation from the view matrix
+		view = glm::mat4(glm::mat3(FPScamera->GetViewMatrix())); // remove translation from the view matrix
 		cubeMapSkyboxShader->setMat4("view", view);
 		// skybox cube
 		glBindVertexArray(skyboxVAO);
@@ -370,6 +374,7 @@ int loadCubemap(std::vector<std::string> _textures)
 	//Setting up faces of cubes
 	int width, height, nrChannel;
 
+
 	for (int i = 0; i < _textures.size(); i++)   //Iterate through each texture
 	{
 		unsigned char *data = stbi_load(_textures[i].c_str(), &width, &height, &nrChannel, 0);
@@ -389,6 +394,7 @@ int loadCubemap(std::vector<std::string> _textures)
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-		return textureID;
+		
 	}
+	return textureID;
 }

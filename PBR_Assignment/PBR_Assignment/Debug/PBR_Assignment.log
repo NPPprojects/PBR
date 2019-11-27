@@ -1,11 +1,10 @@
 ﻿  Main.cpp
 h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(310): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(312): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(314): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(316): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(353): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(360): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(373): warning C4018: '<': signed/unsigned mismatch
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(394): warning C4715: 'loadCubemap': not all control paths return a value
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(318): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(320): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(357): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(364): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(378): warning C4018: '<': signed/unsigned mismatch
   PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
