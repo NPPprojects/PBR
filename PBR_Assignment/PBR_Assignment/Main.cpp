@@ -208,6 +208,8 @@ int main()
 
 		skybox->use();
 
+		
+
 		//now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
@@ -215,10 +217,12 @@ int main()
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//use the color attachment texture as the texture of the quad plane
-		frameBuffer->use();
-		
 
-		
+		frameBuffer->use();
+
+		//Gamma Correction
+	
+	
 
 
 
