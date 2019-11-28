@@ -70,9 +70,6 @@ public:
 
 	glm::vec3 getDirLightPos();
 
-	void setViewMatrix();
-
-	void setProjectionMatrix();
 
 
 

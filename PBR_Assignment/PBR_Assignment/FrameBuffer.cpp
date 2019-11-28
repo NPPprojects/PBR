@@ -8,6 +8,7 @@ FrameBuffer::FrameBuffer(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 	 screenWidth = _screenWidth;
 	 screenHeight = _screenHeight;
 	frameBufferConfiguration();
+	gamma = 1.0 / 2.0;
 }
 
 FrameBuffer::~FrameBuffer()
@@ -51,4 +52,11 @@ void FrameBuffer::use()
 	glBindVertexArray(getVAO());
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
 	glDrawArrays(GL_TRIANGLES, 0, verteciesCount);
+
+	objectShader->setFloat("gamma", gamma);
+}
+
+float FrameBuffer::setGamma(float _gamma)
+{
+	return gamma += _gamma;
 }

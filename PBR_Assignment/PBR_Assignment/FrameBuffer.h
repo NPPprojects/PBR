@@ -10,6 +10,7 @@ public:
 	void frameBufferConfiguration();
 	int getFBO();
 	void use();
+	float setGamma(float _gamma);
 
 private:
 	unsigned int frameBuffer;
@@ -17,5 +18,7 @@ private:
 	unsigned int renderBuffer;
 
 	int screenWidth, screenHeight;
+
+	float gamma;
 };
 

@@ -10,6 +10,7 @@ public:
 	~Skybox();
 	int loadCubemap(std::vector<std::string> _textures);
 	void use();
+
 	// SET function for view matrix
 
 private:

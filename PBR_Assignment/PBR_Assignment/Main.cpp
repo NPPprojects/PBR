@@ -18,7 +18,7 @@
 // Resize Function
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 // Input Function
-void processInput(GLFWwindow *window);
+void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer);
 
 
 //setings
@@ -170,7 +170,7 @@ int main()
 			glfwSetTime(Time);
 			deltaTime = 0.02f;
 		}
-		processInput(window);
+		processInput(window,frameBuffer);
 
 		// render
 		// ------
@@ -246,7 +246,7 @@ int main()
 
 }
 
-void processInput(GLFWwindow *window)
+void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
@@ -270,7 +270,11 @@ void processInput(GLFWwindow *window)
 	}
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
 		spin = true;
-
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		_framebuffer->setGamma(0.01);
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		_framebuffer->setGamma(-0.01);
+		
 }
 
 

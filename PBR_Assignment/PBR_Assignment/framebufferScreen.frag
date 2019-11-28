@@ -6,7 +6,7 @@ in vec2 TexCoords;
 uniform sampler2D screenTexture;
 uniform float time;
 const float offset= 1.0/30.0;  
-float gamma = 1.0/1.5;
+uniform float gamma;
 
 void main()
 {
@@ -28,7 +28,7 @@ void main()
    0,1,0,
    0,0,0
     );
-    
+     
     vec3 sampleTex[9];
     for(int i = 0; i < 9; i++)
     {

@@ -12,8 +12,9 @@ Skybox::Skybox(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, 
 		faces.push_back(_faces[i]);
 	}
 	cubemapTexture = loadCubemap(faces);
-//	faces.clear();
-//	_faces.clear();
+	faces.clear();
+	_faces.clear();
+
 }
 
 Skybox::~Skybox()
@@ -63,6 +64,8 @@ void Skybox::use()
 	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
 	//Projection matrix
 	setShaderUniform();
+	
+	
 	//View Matrix
 
 
@@ -76,3 +79,4 @@ void Skybox::use()
 	glBindVertexArray(0);
 	glDepthFunc(GL_LESS); // set depth function back to default
 }
+
