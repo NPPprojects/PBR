@@ -3,10 +3,8 @@
 
 
 FrameBuffer::FrameBuffer(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _screenHeight) :
-	ObjectClass(_ObjectFile, _objectShader, _camera)
+	ObjectClass(_ObjectFile, _objectShader, _camera,  _screenWidth,  _screenHeight)
 {
-	 screenWidth = _screenWidth;
-	 screenHeight = _screenHeight;
 	frameBufferConfiguration();
 	gamma = 1.0 / 2.0;
 }
@@ -48,6 +46,7 @@ int FrameBuffer::getFBO()
 
 void FrameBuffer::use()
 {
+	
 	objectShader->use();
 	glBindVertexArray(getVAO());
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
@@ -58,5 +57,7 @@ void FrameBuffer::use()
 
 float FrameBuffer::setGamma(float _gamma)
 {
+	std::cout << "Current Gamma: " << gamma << std::endl;
 	return gamma += _gamma;
+	
 }

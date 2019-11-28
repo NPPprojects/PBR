@@ -16,16 +16,16 @@ class ObjectClass
 {
 public:
 	//HUD
-	ObjectClass(const char* _ObjectFile, std::shared_ptr<Shader> _objectShader);
+	ObjectClass(const char* _ObjectFile, std::shared_ptr<Shader> _objectShader, int _ScreenWidth, int _ScreenHeight);
 	//No Texture
-	ObjectClass(const char*, std::shared_ptr <Shader>, std::shared_ptr <CameraObject> _camera);
+	ObjectClass(const char*, std::shared_ptr <Shader>, std::shared_ptr <CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
 	//Pre-Made
-	ObjectClass(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile);
+	ObjectClass(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile, int _ScreenWidth, int _ScreenHeight);
 	//Textured
-	ObjectClass(const char * _ObjectFile, const char * _TexturePath, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera);
+	ObjectClass(const char * _ObjectFile, const char * _TexturePath, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
 
 	//Experimental
-	ObjectClass(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera);
+	ObjectClass(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
 
 	~ObjectClass();
 
@@ -59,7 +59,9 @@ public:
 
 	void applyTransformation(glm::vec3);
 
-	float temp = 0.0f; // delete this
+	void setScreenParameters(int _screenWidth, int _screenHeight);
+	
+
 
 
 
@@ -69,6 +71,8 @@ public:
 	glm::vec3 getPointLightPos(int index);
 
 	glm::vec3 getDirLightPos();
+
+	
 
 
 
@@ -121,4 +125,10 @@ protected:
 
 	//Model
 	std::shared_ptr<Model> objModel;
+
+	//Screen Resolution
+	int screenWidth;
+	int screenHeight;
 };
+
+

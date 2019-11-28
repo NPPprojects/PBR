@@ -3,8 +3,8 @@
 //Remove when done debugging
 #include "glm/ext.hpp"
 
-Skybox::Skybox(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, std::vector<std::string> &_faces) :
-	ObjectClass(_ObjectFile, _objectShader, _camera)
+Skybox::Skybox(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _screenHeight, std::vector<std::string> &_faces) :
+	ObjectClass(_ObjectFile, _objectShader, _camera, _screenWidth, _screenHeight)
 {
 	
 	for (int i = 0; i < 6; i++)
@@ -12,8 +12,8 @@ Skybox::Skybox(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, 
 		faces.push_back(_faces[i]);
 	}
 	cubemapTexture = loadCubemap(faces);
-	faces.clear();
-	_faces.clear();
+	//faces.clear();
+	//_faces.clear();
 
 }
 
@@ -61,7 +61,7 @@ void Skybox::use()
 	glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 	objectShader->use();
 	view = glm::mat4(glm::mat3(camera->GetViewMatrix()));
-	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->Getzoom()), float(screenWidth) / (float)screenHeight, 0.1f, 100.0f);
 	//Projection matrix
 	setShaderUniform();
 	

@@ -6,13 +6,13 @@ class GameObject : public ObjectClass
 public:
 
 	//Basic objects with position with/without colors
-	GameObject(const char* _ObjectFile, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera);
+	GameObject(const char* _ObjectFile, std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
 	
 	//Basic objects with textures
-	GameObject(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera);
+	GameObject(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
 
 	//Object That use and .obj file
-	GameObject(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile);
+	GameObject(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile, int _ScreenWidth, int _ScreenHeight);
 
 	~GameObject();
 

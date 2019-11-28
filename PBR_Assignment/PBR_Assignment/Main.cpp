@@ -23,7 +23,7 @@ void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 
 //setings
 const unsigned int ScreenWidth = 800;
-const unsigned int ScreenHeight = 600;
+const unsigned int ScreenHeight = 800;
 
 //Testing value
 
@@ -43,7 +43,7 @@ float Temp_Test = 0.0f; //Value for testing
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-int loadCubemap(std::vector<std::string> _textures);
+
 
 int main()
 {
@@ -119,7 +119,7 @@ int main()
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
 
-	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
+	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight);
 
 
 	//Objects
@@ -128,12 +128,12 @@ int main()
 
 	for (int i = 0; i <= 1; i++)
 	{
-		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
+		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight));
 	}
 	
-	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
+	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj",ScreenWidth, ScreenHeight);
 	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
-	std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>("cubemapSkybox.data", cubeMapSkyboxShader, FPScamera, faces);
+	std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>("cubemapSkybox.data", cubeMapSkyboxShader, FPScamera, ScreenWidth, ScreenHeight, faces);
 	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
 	
@@ -146,12 +146,12 @@ int main()
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
-		glm::vec3 tracker = FPScamera->GetPosition();
-		std::cout << tracker.x << "  " << tracker.y << "  " << tracker.z << ": WORLD POSITIONS" << std::endl;
-		std::cout << "Up/Down: " << FPScamera->getPitch() << "      " << "Left//Right: " << FPScamera->getYaw() << std::endl;
+		//glm::vec3 tracker = FPScamera->GetPosition();
+		//std::cout << tracker.x << "  " << tracker.y << "  " << tracker.z << ": WORLD POSITIONS" << std::endl;
+		//std::cout << "Up/Down: " << FPScamera->getPitch() << "      " << "Left//Right: " << FPScamera->getYaw() << std::endl;
 		//std::cout << FPScamera->getPitch() << "Left//Right" << std::endl;
 		//Timer
-		std::cout << glfwGetTime()<<std::endl;
+		//std::cout << glfwGetTime()<<std::endl;
 		double currentFrame = glfwGetTime();
 
 		deltaTime = currentFrame - lastFrame;
@@ -161,12 +161,12 @@ int main()
 		//Input handling
 		if (spin == true)
 		{
-			std::cout << "Spinning" << std::endl;
+		//	std::cout << "Spinning" << std::endl;
 			Time = glfwGetTime();
 		}
 		else if (spin == false)
 		{
-			std::cout << "Paused" << std::endl;
+		//	std::cout << "Paused" << std::endl;
 			glfwSetTime(Time);
 			deltaTime = 0.02f;
 		}
@@ -220,7 +220,6 @@ int main()
 
 		frameBuffer->use();
 
-		//Gamma Correction
 	
 	
 
@@ -308,37 +307,3 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	FPScamera->ProcessMouseScroll(yoffset);
 }
 
-
-int loadCubemap(std::vector<std::string> _textures)
-{
-	unsigned int textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-
-	//Setting up faces of cubes
-	int width, height, nrChannel;
-
-
-	for (int i = 0; i < _textures.size(); i++)   //Iterate through each texture
-	{
-		unsigned char *data = stbi_load(_textures[i].c_str(), &width, &height, &nrChannel, 0);
-			if (data)
-			{
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-				stbi_image_free(data);
-			}
-			else
-			{
-				std::cout << "Cubemap texture failed to load at path: " << _textures[i] << std::endl;
-				stbi_image_free(data);
-			}
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-		
-	}
-	return textureID;
-}

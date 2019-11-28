@@ -3,16 +3,18 @@
 //Create a function that can read a text file containing vertecies for an object and the amount of components per vertex attribute
 
 //HUD
-ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader)
+ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, int _screenWidth, int _screenHeight)
 {
+	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	readVertexData(_ObjectFile);
 	initialiseVertexData();
 
 }
 //No Texture
-ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera)
+ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight)
 {
+	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	setCamera(_camera);
 	readVertexData(_ObjectFile);
@@ -20,37 +22,38 @@ ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 
 }
 //Pre-Made Objects
-ObjectClass::ObjectClass(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, const char* _ObjectFile )
+ObjectClass::ObjectClass(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, const char* _ObjectFile,int _screenWidth,int _ScreenHeight)
 {
+	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	setCamera(_camera);
 	objModel = std::make_shared<Model>(_ObjectFile);
   
 }
 //Textured
-ObjectClass::ObjectClass(const char* _ObjectFile, const char* _TexturePath, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera)
+ObjectClass::ObjectClass(const char* _ObjectFile, const char* _TexturePath, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight)
 {
+	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	setCamera(_camera);
 	readVertexData(_ObjectFile);
 	initialiseVertexData();
-
+	
 	texture[0] = loadTexture(_TexturePath);
 }
 
 
-ObjectClass::ObjectClass(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera)
+ObjectClass::ObjectClass(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight)
 {
+	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	setCamera(_camera);
 	readVertexData(_ObjectFile);
 	initialiseVertexData();
 	for (int i = 0; i <= _TextureCount - 1; i++)
 	{
-
 		texture[i] = loadTexture(_TexturePath[i]);
 	}
-
 }
 
 
@@ -104,7 +107,7 @@ void ObjectClass::use3D()
 		glBindTexture(GL_TEXTURE_2D, texture[i]);          //Only One Texture
 	}
 	//Temp Transformations
-	temp = temp + 0.01f; //Testing values 
+	
    // std::cout << temp << "This value \n";
 
 	//Set Up Uniforms
@@ -112,7 +115,7 @@ void ObjectClass::use3D()
 
 	//Set Up Projection
 
-	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)1920 / (float)1080, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->Getzoom()), float(screenWidth) / (float)screenHeight, 0.1f, 100.0f);
 	view = camera->GetViewMatrix();
 
 
@@ -139,7 +142,7 @@ void ObjectClass::useModel()
 	
 	setShaderUniform();
 
-	projection = glm::perspective(glm::radians(camera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera->Getzoom()), float(screenWidth) / (float)screenHeight, 0.1f, 100.0f);
 	view = camera->GetViewMatrix();
 
 	model = glm::mat4(1.0f);	
@@ -374,3 +377,8 @@ glm::vec3 ObjectClass::getDirLightPos()
 	return dirLightPos;
 }
 
+void ObjectClass::setScreenParameters(int _screenWidth, int _screenHeight)
+{
+	screenWidth = _screenWidth;
+	screenHeight = _screenHeight;
+}

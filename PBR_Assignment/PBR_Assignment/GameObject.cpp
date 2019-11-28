@@ -2,18 +2,18 @@
 
 
 
-GameObject::GameObject(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera) :
-	ObjectClass(_ObjectFile, _TexturePath, _TextureCount, _objectShader, _camera)
+GameObject::GameObject(const char* _ObjectFile, const char* _TexturePath[], int _TextureCount, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _ScreenWidth, int _ScreenHeight) :
+	ObjectClass(_ObjectFile, _TexturePath, _TextureCount, _objectShader, _camera , _ScreenWidth, _ScreenHeight)
 {
 
 }
-GameObject::GameObject(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera) :
-	ObjectClass(_ObjectFile, _objectShader, _camera)
+GameObject::GameObject(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _ScreenWidth, int _ScreenHeight) :
+	ObjectClass(_ObjectFile, _objectShader, _camera, _ScreenWidth, _ScreenHeight)
 {
 
 }
-GameObject::GameObject(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, const char* _ObjectFile) :
-	ObjectClass(_objectShader, _camera,  _ObjectFile)
+GameObject::GameObject(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, const char* _ObjectFile , int _ScreenWidth, int _ScreenHeight) :
+	ObjectClass(_objectShader, _camera,  _ObjectFile , _ScreenWidth,  _ScreenHeight)
 {
 
 }

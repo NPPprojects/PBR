@@ -17,7 +17,7 @@ private:
 	unsigned int textureColorBuffer;
 	unsigned int renderBuffer;
 
-	int screenWidth, screenHeight;
+
 
 	float gamma;
 };
