@@ -5,7 +5,7 @@ in vec2 TexCoords;
 
 uniform sampler2D screenTexture;
 uniform float time;
-const float offset= 1.0/300.0;  
+const float offset= 1.0/30.0;  
 
 void main()
 {
@@ -23,9 +23,9 @@ void main()
     );
 
     float kernel[9] = float[](
-    0, 0, 0,
-    0, 1, 0,
-    0, 0, 0
+    -1, -1, -1,
+    -1, 8, -1,
+    -1, -1, -1
     );
     
     vec3 sampleTex[9];

@@ -374,4 +374,3 @@ glm::vec3 ObjectClass::getDirLightPos()
 	return dirLightPos;
 }
 
-

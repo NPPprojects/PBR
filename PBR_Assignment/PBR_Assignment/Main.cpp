@@ -8,6 +8,7 @@
 #include "Model.h";
 #include "glm/ext.hpp"
 #include "FrameBuffer.h"
+#include "Skybox.h"
 
 //Memory Leaks
 //#define _CRTDBG_MAP_ALLOC
@@ -90,97 +91,8 @@ int main()
 	//Enable Face Culling
 	glEnable(GL_CULL_FACE);
 	
-	//Custom Cursor
-	CustomCursor Yugioh_Cursor("resources/textures/YuGiOh Pyramid.png", window);
-
-	//Shader Program
-	std::shared_ptr<Shader> TextureShader3D = std::make_shared<Shader>("3DObjectShader.vert", "TextureShader.frag");
-	std::shared_ptr<Shader> ColorBoxShader = std::make_shared<Shader>("ColorBox.vert", "ColorBox.frag");
-	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
-	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
-	std::shared_ptr<Shader> nanosuitShader1 = std::make_shared<Shader>("nanosuit.vert", "nanosuit.frag");
-	std::shared_ptr<Shader> frameBufferShader = std::make_shared<Shader>("framebufferScreen.vert", "framebufferScreen.frag");
-	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
-	//Testing Shader
-	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
-	std::vector<std::shared_ptr<GameObject>> lightBoxes;
-	for (int i = 0; i <= 1; i++)
-	{
-		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
-	}
-	
-
-	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
-	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
-
-	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
-	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
-	
-	// Dont use raw arrays. use std::array;
-	glm::vec3 positions[] = {
-		glm::vec3(1.5409f,  0.248259f,  0.822887f),
-		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
-	};
-
-	
-	//Loading a skybox
-	float skyboxVertices[] = {
-		// positions          
-		-1.0f,  1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-
-		-1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-
-		-1.0f, -1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
-
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f
-	};
-	// skybox VAO
-	unsigned int skyboxVAO, skyboxVBO;
-	glGenVertexArrays(1, &skyboxVAO);
-	glGenBuffers(1, &skyboxVBO);
-	glBindVertexArray(skyboxVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-
 	// load textures
-	// -------------
+// -------------
 
 	std::vector<std::string> faces
 	{
@@ -191,9 +103,46 @@ int main()
 		("resources/textures/skybox/front.jpg"),
 		("resources/textures/skybox/back.jpg")
 	};
-	unsigned int cubemapTexture = loadCubemap(faces);
 
-	cubeMapSkyboxShader->setInt("skybox", 0);
+
+
+	//Custom Cursor
+	CustomCursor Yugioh_Cursor("resources/textures/YuGiOh Pyramid.png", window);
+
+	//Shader Program
+	std::shared_ptr<Shader> TextureShader3D = std::make_shared<Shader>("3DObjectShader.vert", "TextureShader.frag");
+	std::shared_ptr<Shader> ColorBoxShader = std::make_shared<Shader>("ColorBox.vert", "ColorBox.frag");
+	std::shared_ptr<Shader> LightBoxShader = std::make_shared<Shader>("LightBox.vert", "LightBox.frag");
+	std::shared_ptr<Shader> nanosuitShader = std::make_shared<Shader>("MultipleLights.vert", "MultipleLights.frag");
+	
+	std::shared_ptr<Shader> frameBufferShader = std::make_shared<Shader>("framebufferScreen.vert", "framebufferScreen.frag");
+
+	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
+
+	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera);
+
+
+	//Objects
+	
+	std::vector<std::shared_ptr<GameObject>> lightBoxes;
+
+	for (int i = 0; i <= 1; i++)
+	{
+		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera));
+	}
+	
+	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj");
+	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
+	std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>("cubemapSkybox.data", cubeMapSkyboxShader, FPScamera, faces);
+	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
+	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
+	
+	// Dont use raw arrays. use std::array;
+	glm::vec3 positions[] = {
+		glm::vec3(1.5409f,  0.248259f,  0.822887f),
+		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
+	};
+
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -226,7 +175,7 @@ int main()
 		// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
-		//glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
+		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
 
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
@@ -256,35 +205,20 @@ int main()
 		nanosuit->setDirLightPos(LightBox);  
 		nanosuit->setPointLightPos(lightBoxes, 1);
 		
-		glm::mat4 view = FPScamera->GetViewMatrix();
-		// draw skybox as last
-		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-		cubeMapSkyboxShader->use();
-		view = glm::mat4(glm::mat3(FPScamera->GetViewMatrix())); // remove translation from the view matrix
-	//	glm::mat4 projection = glm::perspective(glm::radians(FPScamera->Getzoom()), (float)800 / (float)600, 0.1f, 100.0f);
-		cubeMapSkyboxShader->setMat4("view", view);
-//		cubeMapSkyboxShader->setMat4("projection", projection);
-		// skybox cube
-		glBindVertexArray(skyboxVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-		glDepthFunc(GL_LESS); // set depth function back to default
 
+		skybox->use();
 
-		// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
-	//	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//	//glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
-		// clear all relevant buffers
-	////	glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	////	glClear(GL_COLOR_BUFFER_BIT);
-
-		// use the color attachment texture as the texture of the quad plane
-	////	frameBuffer->use();
+		//now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+		//clear all relevant buffers
+		glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//use the color attachment texture as the texture of the quad plane
+		frameBuffer->use();
 		
 
-
+		
 
 
 
