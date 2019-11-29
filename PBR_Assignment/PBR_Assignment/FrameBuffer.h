@@ -11,7 +11,7 @@ public:
 	int getFBO();
 	void use();
 	float setGamma(float _gamma);
-
+	float setExposure(float _gamma);
 private:
 	unsigned int frameBuffer;
 	unsigned int textureColorBuffer;
@@ -19,6 +19,7 @@ private:
 
 
 
+	float exposure;
 	float gamma;
 };
 

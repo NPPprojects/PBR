@@ -1,11 +1,3 @@
-﻿  Main.cpp
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(255): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(257): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(259): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(273): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(275): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(300): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(307): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  FrameBuffer.cpp
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\framebuffer.cpp(10): warning C4305: '=': truncation from 'double' to 'float'
   PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

@@ -6,7 +6,10 @@ FrameBuffer::FrameBuffer(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 	ObjectClass(_ObjectFile, _objectShader, _camera,  _screenWidth,  _screenHeight)
 {
 	frameBufferConfiguration();
-	gamma = 1.0 / 2.0;
+	//default gamma
+	gamma = 2.2;
+	//default exposure
+	exposure = 0.5; 
 }
 
 FrameBuffer::~FrameBuffer()
@@ -53,6 +56,7 @@ void FrameBuffer::use()
 	glDrawArrays(GL_TRIANGLES, 0, verteciesCount);
 
 	objectShader->setFloat("gamma", gamma);
+	objectShader->setFloat("exposure", exposure);
 }
 
 float FrameBuffer::setGamma(float _gamma)
@@ -60,4 +64,10 @@ float FrameBuffer::setGamma(float _gamma)
 	std::cout << "Current Gamma: " << gamma << std::endl;
 	return gamma += _gamma;
 	
+}
+
+float FrameBuffer::setExposure(float _exposure)
+{
+	std::cout << "Current Exposure: " << exposure << std::endl;
+	return exposure += _exposure;
 }

@@ -7,7 +7,7 @@ uniform sampler2D screenTexture;
 uniform float time;
 const float offset= 1.0/300.0;  
 uniform float gamma;
-
+uniform float exposure;
 void main()
 {
 
@@ -24,9 +24,13 @@ void main()
     );
 
     float kernel[9] = float[](
-   -1,-1,-1,
-   -1,8,-1,
-   -1,-1,-1
+1,1,1,
+1,-8,1,
+1,1,1
+//0,0,0,
+//0,1,0,
+//0,0,0
+
     );
      
     vec3 sampleTex[9];
@@ -38,7 +42,12 @@ void main()
     for(int i = 0; i < 9; i++)
         col += sampleTex[i] * kernel[i];
     
-	col= pow(col, vec3(gamma));
-    FragColor = vec4(col, 1.0);
+	// Exposure tone mapping
+
+    vec3 mapped =  vec3(1.0) - exp(-col * exposure);
+	  // gamma correction 
+    mapped = pow(mapped, vec3(1.0 / gamma));
+
+    FragColor = vec4(mapped, 1.0);
 	 
-}  
+}	

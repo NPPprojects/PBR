@@ -90,7 +90,6 @@ int main()
 	//Enable stencil Testing
 	//Enable Face Culling
 	glEnable(GL_CULL_FACE);
-	
 	// load textures
 // -------------
 
@@ -273,6 +272,10 @@ void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 		_framebuffer->setGamma(0.01);
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		_framebuffer->setGamma(-0.01);
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		_framebuffer->setExposure(0.01);
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		_framebuffer->setExposure(-0.01);
 		
 }
 
