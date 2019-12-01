@@ -12,13 +12,14 @@ public:
 	void use();
 	float setGamma(float _gamma);
 	float setExposure(float _gamma);
+  int setBlurIntesity(int _blurIntesity);
 private:
 	unsigned int frameBuffer;
 	unsigned int textureColorBuffer;
 	unsigned int renderBuffer;
 
 
-
+  int blurIntesity;
 	float exposure;
 	float gamma;
 };

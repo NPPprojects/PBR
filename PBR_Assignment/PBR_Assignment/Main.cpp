@@ -276,6 +276,10 @@ void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 		_framebuffer->setExposure(0.01);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		_framebuffer->setExposure(-0.01);
+  if (glfwGetKey(window, GLFW_KEY_U) == GLFW_RELEASE)
+    _framebuffer->setBlurIntesity(1);
+  if (glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE)
+    _framebuffer->setBlurIntesity(-1);
 		
 }
 
