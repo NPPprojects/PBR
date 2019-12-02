@@ -1,3 +1,13 @@
-﻿  FrameBuffer.cpp
-d:\pbr\pbr_assignment\pbr_assignment\framebuffer.cpp(10): warning C4305: '=': truncation from 'double' to 'float'
-  PBR_Assignment.vcxproj -> D:\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+﻿  Main.cpp
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(260): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(262): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(264): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(266): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(280): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(282): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(284): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(286): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(312): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\main.cpp(319): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

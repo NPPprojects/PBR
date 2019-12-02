@@ -44,6 +44,7 @@ float Temp_Test = 0.0f; //Value for testing
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
+int loadTexture(char const * path);
 
 int main()
 {
@@ -118,11 +119,15 @@ int main()
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
 
-	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight);
+	std::shared_ptr<Shader> normalMaps = std::make_shared<Shader>("normal_mapping.vert", "normal_mapping.frag");
+
+
 
 
 	//Objects
-	
+
+	std::shared_ptr<GameObject> LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight);
+
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;
 
 	for (int i = 0; i <= 1; i++)
@@ -130,6 +135,7 @@ int main()
 		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight));
 	}
 	
+	std::shared_ptr<GameObject> monster = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nadia/SpecialOnes.obj", ScreenWidth, ScreenHeight);
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj",ScreenWidth, ScreenHeight);
 	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
 	std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>("cubemapSkybox.data", cubeMapSkyboxShader, FPScamera, ScreenWidth, ScreenHeight, faces);
@@ -141,8 +147,14 @@ int main()
 		glm::vec3(1.5409f,  0.248259f,  0.822887f),
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
+	unsigned int diffuseMap = loadTexture("resources/textures/brickwall.jpg");
+	unsigned int diffuseMap = loadTexture("resources/textures/brickwall_normal.png");
 
+	normalMaps->use();
+	normalMaps->setInt("diffuseMap", 0);
+	normalMaps->setInt("normalMap", 1);
 	//Render Loop
+
 	while (!glfwWindowShouldClose(window))
 	{
 		//glm::vec3 tracker = FPScamera->GetPosition();
@@ -203,6 +215,13 @@ int main()
 		nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		nanosuit->setDirLightPos(LightBox);  
 		nanosuit->setPointLightPos(lightBoxes, 1);
+
+
+	//	monster->useModel();
+	//	monster->setPosition(glm::vec3(0.0f,0.0f,0.0f));
+	//	monster->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
+	//	monster->setDirLightPos(LightBox);
+	//	monster->setPointLightPos(lightBoxes, 1);
 		
 
 		skybox->use();
@@ -276,10 +295,7 @@ void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 		_framebuffer->setExposure(0.01);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		_framebuffer->setExposure(-0.01);
-  if (glfwGetKey(window, GLFW_KEY_U) == GLFW_RELEASE)
-    _framebuffer->setBlurIntesity(1);
-  if (glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE)
-    _framebuffer->setBlurIntesity(-1);
+
 		
 }
 
@@ -314,3 +330,40 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	FPScamera->ProcessMouseScroll(yoffset);
 }
 
+
+int loadTexture(char const * path)
+{
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+
+	int width, height, nrComponents;
+	unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
+	if (data)
+	{
+		GLenum format;
+		if (nrComponents == 1)
+			format = GL_RED;
+		else if (nrComponents == 3)
+			format = GL_RGB;
+		else if (nrComponents == 4)
+			format = GL_RGBA;
+
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		stbi_image_free(data);
+	}
+	else
+	{
+		std::cout << "Texture failed to load at path: " << path << std::endl;
+		stbi_image_free(data);
+	}
+
+	return textureID;
+}
