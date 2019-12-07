@@ -119,7 +119,7 @@ int main()
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
 
-	std::shared_ptr<Shader> normalMaps = std::make_shared<Shader>("normal_mapping.vert", "normal_mapping.frag");
+	std::shared_ptr<Shader> normalMaps = std::make_shared<Shader>("normalMapsExample.vert", "normalMapsExample.frag");
 
 
 
@@ -147,8 +147,9 @@ int main()
 		glm::vec3(1.5409f,  0.248259f,  0.822887f),
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
+
 	unsigned int diffuseMap = loadTexture("resources/textures/brickwall.jpg");
-	unsigned int diffuseMap = loadTexture("resources/textures/brickwall_normal.png");
+	unsigned int normalMap = loadTexture("resources/textures/brickwall_normal.png");
 
 	normalMaps->use();
 	normalMaps->setInt("diffuseMap", 0);

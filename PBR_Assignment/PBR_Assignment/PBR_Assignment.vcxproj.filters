@@ -72,6 +72,12 @@
     <None Include="cubemapSkybox.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="normalMapsExample.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="normalMapsExample.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">

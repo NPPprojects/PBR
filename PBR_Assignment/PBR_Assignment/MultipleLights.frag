@@ -38,6 +38,7 @@ uniform Material material;
 
 uniform DirLight dirLight;
 
+//Look in to making this a uniform value
 #define NR_POINT_LIGHTS 4  
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
