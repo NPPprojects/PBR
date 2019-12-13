@@ -39,6 +39,8 @@ public:
 
 	void useModel();
 
+	void useSphere();
+
 
 	
 
@@ -80,7 +82,8 @@ public:
 
 private:
 	//Vertex Data Initialisation
-	unsigned int VBO, VAO; //Vertex Buffer Object, Vertex Array Object
+	unsigned int VBO, VAO, EBO; //Vertex Buffer Object, Vertex Array Object, Element Buffer Object
+	unsigned int indexCount; //For EBO
 	int attributeTypeCount; //Counter for amount of Attributes
 	int stride;     //The stride
 	std::ifstream vertexData; //VertexDataFile
@@ -92,6 +95,7 @@ private:
 	void splitStringWhitespace(std::string&, std::vector<std::string>&);
 	void readVertexData(const char*);
 	void initialiseVertexData();         //set up vertex data (and buffer(s)) and configure vertex attributes
+	void initialiseVertexSphereData();		//set up vertex data (and buffer(s)) and configure vertex attributes for sphere 
 protected:
 
 	int verteciesCount; //Amount of vertecies in an object
