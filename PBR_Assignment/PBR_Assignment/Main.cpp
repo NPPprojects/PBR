@@ -45,7 +45,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 int loadTexture(char const * path);
-
+void renderSphere();
 int main()
 {
 
@@ -90,7 +90,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	//Enable stencil Testing
 	//Enable Face Culling
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	// load textures
 // -------------
 
@@ -119,7 +119,7 @@ int main()
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
 
-	std::shared_ptr<Shader> normalMaps = std::make_shared<Shader>("normalMapsExample.vert", "normalMapsExample.frag");
+	std::shared_ptr<Shader> PBRShader = std::make_shared<Shader>("PBR.vert", "PBR.frag");
 
 
 
@@ -139,6 +139,7 @@ int main()
 	std::shared_ptr<GameObject> nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj",ScreenWidth, ScreenHeight);
 	std::shared_ptr<FrameBuffer> frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera,ScreenWidth,ScreenHeight);
 	std::shared_ptr<Skybox> skybox = std::make_shared<Skybox>("cubemapSkybox.data", cubeMapSkyboxShader, FPScamera, ScreenWidth, ScreenHeight, faces);
+	std::shared_ptr<GameObject> spheres = std::make_shared<GameObject>(PBRShader,FPScamera, ScreenWidth, ScreenHeight);
 	//const char *textures[] = { "resources/textures/BetterBox_spec.png" ,"resources/textures/BetterBox_spec.png","resources/textures/Blue_matrix.jpg" };
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
 	
@@ -148,12 +149,33 @@ int main()
 		glm::vec3(-1.36048f,  0.248259f,  0.822887f),
 	};
 
-	unsigned int diffuseMap = loadTexture("resources/textures/brickwall.jpg");
-	unsigned int normalMap = loadTexture("resources/textures/brickwall_normal.png");
+	unsigned int albedo = loadTexture("resources/textures/rusted/rust_basecolor.png");
+	unsigned int normal = loadTexture("resources/textures/rusted/rust_normal.png");
+	unsigned int metallic = loadTexture("resources/textures/rusted/rust_metallic.png");
+	unsigned int roughness = loadTexture("resources/textures/rusted/rust_roughness.png");
+	unsigned int ao = loadTexture("resources/textures/rusted/ao.png");
 
-	normalMaps->use();
-	normalMaps->setInt("diffuseMap", 0);
-	normalMaps->setInt("normalMap", 1);
+
+	//Testing Shit
+	PBRShader->use();
+	PBRShader->setInt("albedoMap", 0);
+	PBRShader->setInt("normalMap", 1);
+	PBRShader->setInt("metallicMap", 2);
+	PBRShader->setInt("roughnessMap", 3);
+	PBRShader->setInt("aoMap", 4);
+
+	// lights
+	// ------
+	glm::vec3 lightPositions[] = {
+		glm::vec3(0.0f, 0.0f, 10.0f),
+	};
+	glm::vec3 lightColors[] = {
+		glm::vec3(150.0f, 150.0f, 150.0f),
+	};
+	int nrRows = 7;
+	int nrColumns = 7;
+	float spacing = 2.5;
+
 	//Render Loop
 
 	while (!glfwWindowShouldClose(window))
@@ -187,35 +209,43 @@ int main()
 		// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
-		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
+		//glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
 
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
 	
+		glm::mat4 projection = glm::perspective(glm::radians(FPScamera->Getzoom()), (float)ScreenWidth / (float)ScreenHeight, 0.1f, 100.0f);
+		PBRShader->use();
+		PBRShader->setMat4("projection", projection);
+		glm::mat4 view = FPScamera->GetViewMatrix();
+		PBRShader->setMat4("view", view);
+		PBRShader->setVec3("camPos", FPScamera->GetPosition());
 
-		for (int i = 0; i <= 1; i++)
-		{
-			lightBoxes.at(i)->use3D();
-			lightBoxes.at(i)->setPosition(positions[i]);
-			//lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
-			lightBoxes.at(i)->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
-		}
-		positions[0] = glm::vec3(1.5409f*sin(Time), 0.248259f, 0.822887f*cos(Time));
-		positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
+		//for (int i = 0; i <= 1; i++)
+		//{
+		//	lightBoxes.at(i)->use3D();
+		//	lightBoxes.at(i)->setPosition(positions[i]);
+		//	//lightBoxes[i]->setRotation(45.0f * Time, positions[i]);
+		//	lightBoxes.at(i)->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		//}
+		//positions[0] = glm::vec3(7*sin(Time), 0.248259f, 7*cos(Time));
+		//positions[1] = glm::vec3(-1.5409f*sin(Time), 1.92578f, -0.822887f*cos(Time));
 
 		
  
-		LightBox->use3D();
-		LightBox->setPosition(glm::vec3(1.8f*sin(Time) , 0.90f, 1.0f*cos(Time)));
-		LightBox->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		//LightBox->use3D();
+		//LightBox->setPosition(glm::vec3(1.8f*sin(Time) , 0.90f, 1.0f*cos(Time)));
+		//LightBox->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 
-		
-		nanosuit->useModel();
-		nanosuit->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-		nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
-		nanosuit->setDirLightPos(LightBox);  
-		nanosuit->setPointLightPos(lightBoxes, 1);
+		//
+		//nanosuit->useModel();
+		//nanosuit->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		//nanosuit->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+		//nanosuit->setDirLightPos(LightBox);  
+		//nanosuit->setPointLightPos(lightBoxes, 1);
+
+
 
 
 	//	monster->useModel();
@@ -223,21 +253,60 @@ int main()
 	//	monster->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 	//	monster->setDirLightPos(LightBox);
 	//	monster->setPointLightPos(lightBoxes, 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, albedo);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normal);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, metallic);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, roughness);
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, ao);
+
+
+		glm::mat4 model = glm::mat4(1.0f);
+		for (int row = 0; row < nrRows; ++row)
+		{
+			for (int col = 0; col < nrColumns; ++col)
+			{
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(
+					(float)(col - (nrColumns / 2)) * spacing,
+					(float)(row - (nrRows / 2)) * spacing,
+					0.0f
+				));
+				PBRShader->setMat4("model", model);
+				renderSphere();
+			}
+		}
+		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
+		{
+			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+	
+			PBRShader->setVec3("lightPositions[" + std::to_string(i) + "]", newPos);
+			PBRShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, newPos);
+			model = glm::scale(model, glm::vec3(0.5f));
+			PBRShader->setMat4("model", model);
+			renderSphere();
+		}
+
+	//	skybox->use();
+
 		
 
-		skybox->use();
+		////now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+		////clear all relevant buffers
+		//glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		////use the color attachment texture as the texture of the quad plane
 
-		
-
-		//now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
-		//clear all relevant buffers
-		glClearColor(0.184f, 0.196f, 0.235f, 1.0f); // set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//use the color attachment texture as the texture of the quad plane
-
-		frameBuffer->use();
+		//frameBuffer->use();
 
 	
 	
@@ -300,12 +369,18 @@ void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer)
 		
 }
 
-
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+	// make sure the viewport matches the new window dimensions; note that width and 
+	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
 
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
@@ -315,13 +390,13 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		firstMouse = false;
 	}
 
-	double xoffset = xpos - lastX;
-	double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
 	lastX = xpos;
 	lastY = ypos;
 
-	FPScamera->ProcessMouseMovement(xoffset, yoffset, 1);
+	FPScamera->ProcessMouseMovement(xoffset, yoffset,true);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -331,7 +406,105 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	FPScamera->ProcessMouseScroll(yoffset);
 }
 
+// renders (and builds at first invocation) a sphere
+// -------------------------------------------------
+unsigned int sphereVAO = 0;
+unsigned int indexCount;
+void renderSphere()
+{
+	if (sphereVAO == 0)
+	{
+		glGenVertexArrays(1, &sphereVAO);
 
+		unsigned int vbo, ebo;
+		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &ebo);
+
+		std::vector<glm::vec3> positions;
+		std::vector<glm::vec2> uv;
+		std::vector<glm::vec3> normals;
+		std::vector<unsigned int> indices;
+
+		const unsigned int X_SEGMENTS = 64;
+		const unsigned int Y_SEGMENTS = 64;
+		const float PI = 3.14159265359;
+		for (unsigned int y = 0; y <= Y_SEGMENTS; ++y)
+		{
+			for (unsigned int x = 0; x <= X_SEGMENTS; ++x)
+			{
+				float xSegment = (float)x / (float)X_SEGMENTS;
+				float ySegment = (float)y / (float)Y_SEGMENTS;
+				float xPos = std::cos(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+				float yPos = std::cos(ySegment * PI);
+				float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+
+				positions.push_back(glm::vec3(xPos, yPos, zPos));
+				uv.push_back(glm::vec2(xSegment, ySegment));
+				normals.push_back(glm::vec3(xPos, yPos, zPos));
+			}
+		}
+
+		bool oddRow = false;
+		for (int y = 0; y < Y_SEGMENTS; ++y)
+		{
+			if (!oddRow) // even rows: y == 0, y == 2; and so on
+			{
+				for (int x = 0; x <= X_SEGMENTS; ++x)
+				{
+					indices.push_back(y       * (X_SEGMENTS + 1) + x);
+					indices.push_back((y + 1) * (X_SEGMENTS + 1) + x);
+				}
+			}
+			else
+			{
+				for (int x = X_SEGMENTS; x >= 0; --x)
+				{
+					indices.push_back((y + 1) * (X_SEGMENTS + 1) + x);
+					indices.push_back(y       * (X_SEGMENTS + 1) + x);
+				}
+			}
+			oddRow = !oddRow;
+		}
+		indexCount = indices.size();
+
+		std::vector<float> data;
+		for (int i = 0; i < positions.size(); ++i)
+		{
+			data.push_back(positions[i].x);
+			data.push_back(positions[i].y);
+			data.push_back(positions[i].z);
+			if (uv.size() > 0)
+			{
+				data.push_back(uv[i].x);
+				data.push_back(uv[i].y);
+			}
+			if (normals.size() > 0)
+			{
+				data.push_back(normals[i].x);
+				data.push_back(normals[i].y);
+				data.push_back(normals[i].z);
+			}
+		}
+		glBindVertexArray(sphereVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), &data[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+		float stride = (3 + 2 + 3) * sizeof(float);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(5 * sizeof(float)));
+	}
+
+	glBindVertexArray(sphereVAO);
+	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+}
+
+// utility function for loading a 2D texture from file
+// ---------------------------------------------------
 int loadTexture(char const * path)
 {
 	unsigned int textureID;
@@ -353,8 +526,8 @@ int loadTexture(char const * path)
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 

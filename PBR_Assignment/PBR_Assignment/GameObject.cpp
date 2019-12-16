@@ -18,6 +18,12 @@ GameObject::GameObject(std::shared_ptr <Shader> _objectShader, std::shared_ptr <
 
 }
 
+GameObject::GameObject(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight) :
+	ObjectClass::ObjectClass(_objectShader, _camera, _screenWidth, _ScreenHeight)
+{
+
+}
+
 
 GameObject::~GameObject()
 {

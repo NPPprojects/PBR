@@ -19,6 +19,8 @@ public:
 	ObjectClass(const char* _ObjectFile, std::shared_ptr<Shader> _objectShader, int _ScreenWidth, int _ScreenHeight);
 	//No Texture
 	ObjectClass(const char*, std::shared_ptr <Shader>, std::shared_ptr <CameraObject> _camera, int _ScreenWidth, int _ScreenHeight);
+
+	ObjectClass(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, int _screenWidth, int _ScreenHeight);
 	//Pre-Made
 	ObjectClass(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile, int _ScreenWidth, int _ScreenHeight);
 	//Textured
@@ -133,6 +135,17 @@ protected:
 	//Screen Resolution
 	int screenWidth;
 	int screenHeight;
+
+
+	//Values I need to delete
+		// lights
+	// ------
+	glm::vec3 lightPositions[1];
+	glm::vec3 lightColors[1];
+	int nrRows = 7;
+	int nrColumns = 7;
+	float spacing = 2.5;
+
 };
 
 

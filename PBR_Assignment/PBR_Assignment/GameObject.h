@@ -14,6 +14,8 @@ public:
 	//Object That use and .obj file
 	GameObject(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, const char * _ObjectFile, int _ScreenWidth, int _ScreenHeight);
 
+	GameObject(std::shared_ptr<Shader> _objectShader, std::shared_ptr<CameraObject> _camera, int _screenWidth, int _ScreenHeight);
+
 	~GameObject();
 
 	//Set Rotation

@@ -21,12 +21,19 @@ ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 	initialiseVertexData();
 }
 //Sphere
-ObjectClass::ObjectClass(const char* _ObjectFile, std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight)
+ObjectClass::ObjectClass(std::shared_ptr <Shader> _objectShader, std::shared_ptr <CameraObject> _camera, int _screenWidth, int _ScreenHeight)
 {
 	setScreenParameters(_screenWidth, _screenWidth);
 	setShader(_objectShader);
 	setCamera(_camera);
-	readVertexData(_ObjectFile);
+
+	
+	lightPositions[0] = glm::vec3(0.0f, 0.0f, 10.0f);
+
+	
+
+	lightColors[0] = glm::vec3(150.0f, 150.0f, 150.0f);
+
 	initialiseVertexSphereData();
 }
 //Pre-Made Objects
@@ -158,6 +165,7 @@ void ObjectClass::useModel()
 }
 void ObjectClass::useSphere() 
 {
+
 	objectShader->use();
 
 	setShaderUniform();
@@ -166,9 +174,30 @@ void ObjectClass::useSphere()
 	view = camera->GetViewMatrix();
 
 	model = glm::mat4(1.0f);
+	for (int row = 0; row < nrRows; ++row)
+	{
+		for (int col = 0; col < nrColumns; ++col)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(
+				(float)(col - (nrColumns / 2)) * spacing,
+				(float)(row - (nrRows / 2)) * spacing,
+				0.0f
+			));
+			objectShader->setMat4("model", model);
+			glBindVertexArray(VAO);
+			glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+		}
+	}
 
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+
+
+	
+
+
+
+
+
 }
 void ObjectClass::readVertexData(const char* _ObjectFile)
 {
@@ -431,6 +460,13 @@ void ObjectClass::setShaderUniform()
 		objectShader->setFloat("pointLights[" + number + "].constant", 1.0f);
 		objectShader->setFloat("pointLights[" + number + "].linear", 0.09);
 		objectShader->setFloat("pointLights[" + number + "].quadratic", 0.032);
+
+
+		//PBR
+		objectShader->setVec3("lightPositions[" + std::to_string(i) + "]", pointLightPos[i]);
+		objectShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 	}
 	
   
@@ -465,6 +501,19 @@ void ObjectClass::setShaderUniform()
 
 	//Skybox 
 	objectShader->setInt("skybox", 0);
+
+	//PBR Not Optimised 
+	objectShader->setVec3("albedo", 0.5f, 0.0f, 0.0f);
+	objectShader->setFloat("ao", 1.0f);
+	objectShader->setVec3("CamPos", camera->GetPosition());
+
+	objectShader->setInt("albedoMap", 0);
+	objectShader->setInt("normalMap", 1);
+	objectShader->setInt("metallicMap", 2);
+	objectShader->setInt("roughnessMap", 3);
+	objectShader->setInt("aoMap", 4);
+
+
 }
 
 glm::vec3 ObjectClass::getPosition()

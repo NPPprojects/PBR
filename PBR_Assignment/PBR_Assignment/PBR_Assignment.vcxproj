@@ -138,8 +138,8 @@
     <None Include="MultipleLights.vert" />
     <None Include="nanosuit.frag" />
     <None Include="nanosuit.vert" />
-    <None Include="normalMapsExample.frag" />
-    <None Include="normalMapsExample.vert" />
+    <None Include="PBR.frag" />
+    <None Include="PBR.vert" />
     <None Include="Textured Cube.data" />
     <None Include="TextureShader.frag" />
   </ItemGroup>

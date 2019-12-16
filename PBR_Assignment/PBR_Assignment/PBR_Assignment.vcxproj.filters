@@ -72,10 +72,10 @@
     <None Include="cubemapSkybox.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="normalMapsExample.vert">
+    <None Include="PBR.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="normalMapsExample.frag">
+    <None Include="PBR.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
