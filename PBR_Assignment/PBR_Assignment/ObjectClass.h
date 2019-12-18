@@ -140,11 +140,7 @@ protected:
 	//Values I need to delete
 		// lights
 	// ------
-	glm::vec3 lightPositions[1];
-	glm::vec3 lightColors[1];
-	int nrRows = 7;
-	int nrColumns = 7;
-	float spacing = 2.5;
+
 
 };
 

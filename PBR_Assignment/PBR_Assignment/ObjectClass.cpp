@@ -28,11 +28,7 @@ ObjectClass::ObjectClass(std::shared_ptr <Shader> _objectShader, std::shared_ptr
 	setCamera(_camera);
 
 	
-	lightPositions[0] = glm::vec3(0.0f, 0.0f, 10.0f);
 
-	
-
-	lightColors[0] = glm::vec3(150.0f, 150.0f, 150.0f);
 
 	initialiseVertexSphereData();
 }
@@ -168,35 +164,19 @@ void ObjectClass::useSphere()
 
 	objectShader->use();
 
-	setShaderUniform();
+//	setShaderUniform();
 
 	projection = glm::perspective(glm::radians(camera->Getzoom()), float(screenWidth) / (float)screenHeight, 0.1f, 100.0f);
 	view = camera->GetViewMatrix();
+	objectShader->setMat4("projection", projection);
+	objectShader->setMat4("view", view);
+	objectShader->setVec3("camPos", camera->GetPosition());
 
 	model = glm::mat4(1.0f);
-	for (int row = 0; row < nrRows; ++row)
-	{
-		for (int col = 0; col < nrColumns; ++col)
-		{
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(
-				(float)(col - (nrColumns / 2)) * spacing,
-				(float)(row - (nrRows / 2)) * spacing,
-				0.0f
-			));
-			objectShader->setMat4("model", model);
-			glBindVertexArray(VAO);
-			glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
-		}
-	}
+	objectShader->setMat4("model", model);
 
-
-
-	
-
-
-
-
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 
 }
 void ObjectClass::readVertexData(const char* _ObjectFile)
@@ -461,12 +441,6 @@ void ObjectClass::setShaderUniform()
 		objectShader->setFloat("pointLights[" + number + "].linear", 0.09);
 		objectShader->setFloat("pointLights[" + number + "].quadratic", 0.032);
 
-
-		//PBR
-		objectShader->setVec3("lightPositions[" + std::to_string(i) + "]", pointLightPos[i]);
-		objectShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 	}
 	
   
