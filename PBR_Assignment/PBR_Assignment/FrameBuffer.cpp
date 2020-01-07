@@ -7,7 +7,7 @@ FrameBuffer::FrameBuffer(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 {
 	frameBufferConfiguration();
 	//default gamma
-	gamma = 2.2;
+	gamma = 1.25;
 	//default exposure
 	exposure = 0.5; 
   //default blur

@@ -1,15 +1,2 @@
-﻿  ObjectClass.cpp
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(208): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(326): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(366): warning C4018: '<': signed/unsigned mismatch
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(390): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(392): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(394): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(441): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(442): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr\pbr_assignment\pbr_assignment\objectclass.cpp(471): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+﻿  FrameBuffer.cpp
+  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
