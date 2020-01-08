@@ -1,16 +1,25 @@
-﻿  Main.cpp
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(398): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(400): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(402): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(404): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(418): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(420): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(422): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(424): warning C4305: 'argument': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(428): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(430): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(454): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(455): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\main.cpp(467): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  Scene.cpp
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(316): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(318): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(320): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(322): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(336): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(338): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(340): warning C4305: 'argument': truncation from 'double' to 'float'
+h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\scene.cpp(342): warning C4305: 'argument': truncation from 'double' to 'float'
+glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
   PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

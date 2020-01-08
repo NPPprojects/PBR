@@ -43,15 +43,9 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 
 	frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera, ScreenWidth, ScreenHeight);
 	//Point Light positions
-	positions[0] = glm::vec3(1.5409f, 0.248259f, 0.822887f);
-	positions[1] = glm::vec3(-1.36048f, 0.248259f, 0.822887f);
-
-	albedo = loadTexture("resources/textures/rusted/rust_basecolor.png");
-	normal = loadTexture("resources/textures/rusted/rust_normal.png");
-	metallic = loadTexture("resources/textures/rusted/rust_metallic.png");
-	roughness = loadTexture("resources/textures/rusted/rust_roughness.png");
-	ao = loadTexture("resources/textures/rusted/ao.png");
-
+	
+	positions.push_back(glm::vec3(1.5409f, 0.248259f, 0.822887f));
+	positions.push_back(glm::vec3(-1.36048f, 0.248259f, 0.822887f));
 	//Textures For rusting ball
 
 	PBRShader->use();
@@ -62,8 +56,18 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	PBRShader->setInt("aoMap", 4);
 
 
-	lightColors[0] = glm::vec3(150.0f, 150.0f, 150.0f);
-	lightColors[1] = glm::vec3(150.0f, 150.0f, 150.0f);
+	albedo = loadTexture("resources/textures/rusted/rust_basecolor.png");
+	normal = loadTexture("resources/textures/rusted/rust_normal.png");
+	metallic = loadTexture("resources/textures/rusted/rust_metallic.png");
+	roughness = loadTexture("resources/textures/rusted/rust_roughness.png");	
+	ao = loadTexture("resources/textures/rusted/ao.png");
+	
+	
+
+
+
+	lightColors.push_back(glm::vec3(150.0f, 150.0f, 150.0f));
+	lightColors.push_back(glm::vec3(150.0f, 150.0f, 150.0f));
 
 
 	//FrameBuffer for HDR Map set up
@@ -160,25 +164,28 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	glfwGetFramebufferSize(window, &scrWidth, &scrHeight);
 	glViewport(0, 0, scrWidth, scrHeight);
 	//Render Loop
-
+	
 }
 
 void Scene::loadSceneOne()
 {
+	
 	while (!glfwWindowShouldClose(window))
 	{
-		//glm::vec3 tracker = FPScamera->GetPosition();
-		//std::cout << tracker.x << "  " << tracker.y << "  " << tracker.z << ": WORLD POSITIONS" << std::endl;
-		//std::cout << "Up/Down: " << FPScamera->getPitch() << "      " << "Left//Right: " << FPScamera->getYaw() << std::endl;
-		//std::cout << FPScamera->getPitch() << "Left//Right" << std::endl;
-		//Timer
-		//std::cout << glfwGetTime()<<std::endl;
+		/*
+		glm::vec3 tracker = FPScamera->GetPosition();
+		std::cout << tracker.x << "  " << tracker.y << "  " << tracker.z << ": WORLD POSITIONS" << std::endl;
+		std::cout << "Up/Down: " << FPScamera->getPitch() << "      " << "Left//Right: " << FPScamera->getYaw() << std::endl;
+		std::cout << FPScamera->getPitch() << "Left//Right" << std::endl;
+		Timer
+		std::cout << glfwGetTime()<<std::endl;
+		*/
 		double currentFrame = glfwGetTime();
 
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-
+		
 
 		//Input handling
 		if (spin == true)
@@ -194,15 +201,16 @@ void Scene::loadSceneOne()
 		}
 		processInput(window, frameBuffer);
 
+		
 		// render
 		// ------
 		// bind to framebuffer and draw scene as we normally would to color texture 
-//		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
-
+		//glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->getFBO());
+		
 		glClearColor(0.184f, 0.196f, 0.235f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 		glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-
+	
 		glm::mat4 view = FPScamera->GetViewMatrix();
 
 		for (int i = 0; i <= 1; i++)
@@ -212,10 +220,11 @@ void Scene::loadSceneOne()
 
 			lightBoxes.at(i)->setScale(glm::vec3(0.2f, 0.2f, 0.2f));
 		}
-		positions[0] = glm::vec3(7 * sin(Time), 0.7f, 7 * cos(Time));
-		positions[1] = glm::vec3(-7 * sin(Time), -0.7, -7 * cos(Time));
-
-
+	
+		positions.at(0) = glm::vec3(7 * sin(Time), 0.7f, 7 * cos(Time));	
+		positions.at(1) = glm::vec3(-7 * sin(Time), -0.7, -7 * cos(Time));
+		
+	
 
 		LightBox->use3D();
 		LightBox->setPosition(glm::vec3(1.8f*sin(Time), 0.90f, 1.0f*cos(Time)));
@@ -228,7 +237,7 @@ void Scene::loadSceneOne()
 		nanosuit->setDirLightPos(LightBox);
 		nanosuit->setPointLightPos(lightBoxes, 1);
 
-
+		
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, albedo);
 		glActiveTexture(GL_TEXTURE1);
@@ -245,8 +254,8 @@ void Scene::loadSceneOne()
 
 		for (unsigned int i = 0; i <= 1; ++i)
 		{
-			PBRShader->setVec3("lightPositions[" + std::to_string(i) + "]", lightBoxes[i]->getPosition());
-			PBRShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+			PBRShader->setVec3("lightPositions[" + std::to_string(i) + "]", lightBoxes.at(i)->getPosition());
+			PBRShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors.at(i));
 		}
 
 		//skybox->use();

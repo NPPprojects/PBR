@@ -25,6 +25,7 @@ public:
 	void processInput(GLFWwindow *window, std::shared_ptr<FrameBuffer> _framebuffer);
 	int loadTexture(char const * path);
 	void renderCube();
+
 private:
 	//Time Values
 	double deltaTime;
@@ -88,7 +89,7 @@ private:
 	//std::vector<std::shared_ptr<GameObject> > EmissionBoxes;
 
 	// Dont use raw arrays. use std::array;
-	glm::vec3 positions[1];
+	std::vector<glm::vec3> positions;
 
 	unsigned int albedo;
 	unsigned int normal;
@@ -97,12 +98,14 @@ private:
 	unsigned int ao;
 
 	//Light Brightness values
-	glm::vec3 lightColors[1];
+	std::vector<glm::vec3> lightColors;
 
 	//FrameBuffer VAO and VBO;
 	unsigned int captureFBO;
 	unsigned int captureRBO;
 	//ENV cubemap
 	unsigned int envCubemap;
+
+
 };
 
