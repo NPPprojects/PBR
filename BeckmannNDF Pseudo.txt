@@ -1,0 +1,13 @@
+
+nom 1
+NdotH4
+denom(pi*a2)*NdotH4
+
+nom/denom 
+
+
+expNom = NdotH2 -1
+
+expDenom = a2*Ndoth2
+
+nom/demon *exp(ExpNom/ExpDenom)

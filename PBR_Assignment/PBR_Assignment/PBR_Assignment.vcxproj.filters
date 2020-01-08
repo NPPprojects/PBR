@@ -78,6 +78,24 @@
     <None Include="PBR.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="background.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="background.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="EquirectangularCubemap.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="EquirectangularCubemap.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="IrradianceConvolution.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="IrradianceConvolution.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -119,6 +137,9 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraObject.h">
@@ -152,6 +173,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
