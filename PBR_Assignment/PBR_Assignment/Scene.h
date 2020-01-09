@@ -59,8 +59,10 @@ private:
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader;
 
-	//Point Lighting PBR Textured
-	std::shared_ptr<Shader> PBRShader;;
+	//Point Light PBR
+	std::shared_ptr<Shader> PBRShader;
+	//Point Light PBR Textured
+	std::shared_ptr<Shader> PBRShaderTextured;
 
 	//IBL Lighting
 	std::shared_ptr<Shader> equirectangularShader;
@@ -75,8 +77,11 @@ private:
 
 	std::shared_ptr<GameObject> monster;
 	std::shared_ptr<GameObject> nanosuit;
+	
 	std::shared_ptr<GameObject> spheres;
+	std::shared_ptr<GameObject> texturedSpheres;
 
+	std::shared_ptr<ObjectClass> equirectangularCube;
 	std::shared_ptr<FrameBuffer> frameBuffer;
 
 

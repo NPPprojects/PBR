@@ -159,7 +159,7 @@ void ObjectClass::useModel()
 	model = glm::mat4(1.0f);	
 	objModel->Draw(objectShader);
 }
-void ObjectClass::useSphere() 
+void ObjectClass::useTextureSphere()
 {
 
 	objectShader->use();
@@ -172,12 +172,82 @@ void ObjectClass::useSphere()
 	objectShader->setMat4("view", view);
 	objectShader->setVec3("camPos", camera->GetPosition());
 
-	model = glm::mat4(1.0f);
-	objectShader->setMat4("model", model);
+	//1 Ball
+	//model = glm::mat4(1.0f);
+	//objectShader->setMat4("model", model);
+
+	//Multiple
+	int nrRows = 1000;
+	int nrColumns = 10;
+	float spacing = 2.5;
+
+	for (int row = 0; row < nrRows; ++row)
+	{
+		for (int col = 0; col < nrColumns; ++col)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(
+				(float)(col - (nrColumns / 2)) * spacing,
+				(float)(row - (nrRows / 2)) * spacing,
+				0.0f
+			));
+			objectShader->setMat4("model", model);
+			glBindVertexArray(VAO);
+			glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+		}
+	}
+
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 
+}
+void ObjectClass::useSphere()
+{
+
+	objectShader->use();
+
+	//	setShaderUniform();
+
+	projection = glm::perspective(glm::radians(camera->Getzoom()), float(screenWidth) / (float)screenHeight, 0.1f, 100.0f);
+	view = camera->GetViewMatrix();
+	objectShader->setMat4("projection", projection);
+	objectShader->setMat4("view", view);
+	objectShader->setVec3("camPos", camera->GetPosition());
+
+	//1 Ball
+	//model = glm::mat4(1.0f);
+	//objectShader->setMat4("model", model);
+
+	//Multiple
+	int nrRows = 50;
+	int nrColumns = 50;
+	float spacing = 2.5;
+
+	for (int row = 0; row < nrRows; ++row)
+	{
+		objectShader->setFloat("metallic", (float)row / (float)nrRows);
+		for (int col = 0; col < nrColumns; ++col)
+		{
+			// we clamp the roughness to 0.025 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
+			// on direct lighting.
+			objectShader->setFloat("roughness", glm::clamp((float)col / (float)nrColumns, 0.05f, 1.0f));
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(
+				(col - (nrColumns / 2)) * spacing,
+				(row - (nrRows / 2)) * spacing,
+				0.0f
+			));
+			objectShader->setMat4("model", model);
+			glBindVertexArray(VAO);
+			glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+		}
+
+
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+	}
 }
 void ObjectClass::readVertexData(const char* _ObjectFile)
 {

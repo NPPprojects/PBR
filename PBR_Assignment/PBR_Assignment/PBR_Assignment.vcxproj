@@ -124,6 +124,8 @@
     <None Include="3DObjectShader.vert" />
     <None Include="background.frag" />
     <None Include="background.vert" />
+    <None Include="Blinn-Phong.frag" />
+    <None Include="Blinn-Phong.vert" />
     <None Include="ColorBox.data" />
     <None Include="ColorBox.frag" />
     <None Include="ColorBox.vert" />
@@ -146,6 +148,9 @@
     <None Include="nanosuit.vert" />
     <None Include="PBR.frag" />
     <None Include="PBR.vert" />
+    <None Include="PBRTextured.frag" />
+    <None Include="PBRTextured.vert" />
+    <None Include="resources\objects\primitives\equirectangularcube.data" />
     <None Include="Textured Cube.data" />
     <None Include="TextureShader.frag" />
   </ItemGroup>

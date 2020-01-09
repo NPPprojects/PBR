@@ -41,9 +41,9 @@ public:
 
 	void useModel();
 
+	void useTextureSphere();
+
 	void useSphere();
-
-
 	
 
 	glm::mat4 getModel();

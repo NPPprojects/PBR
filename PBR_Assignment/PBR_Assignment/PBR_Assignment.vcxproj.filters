@@ -72,12 +72,6 @@
     <None Include="cubemapSkybox.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="PBR.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="PBR.vert">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="background.frag">
       <Filter>Resource Files</Filter>
     </None>
@@ -94,6 +88,27 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="IrradianceConvolution.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\objects\primitives\equirectangularcube.data">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PBRTextured.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PBRTextured.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PBR.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PBR.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Blinn-Phong.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Blinn-Phong.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
