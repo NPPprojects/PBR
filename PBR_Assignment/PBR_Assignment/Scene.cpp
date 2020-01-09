@@ -14,7 +14,9 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	window = _window;
 	//GameTimeON
 	spin=true;
-
+	//Blinn Shading set to true by default
+	blinn = true;
+	blinnKeyPressed = true;
 	//Shader Program
 	//TextureShader3D = std::make_shared<Shader>("3DObjectShader.vert", "TextureShader.frag");
 	ColorBoxShader = std::make_shared<Shader>("ColorBox.vert", "ColorBox.frag");
@@ -23,7 +25,8 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	frameBufferShader = std::make_shared<Shader>("framebufferScreen.vert", "framebufferScreen.frag");
 	
 	//cubeMapSkyboxShader = std::make_shared<Shader>("cubemapSkybox.vert", "cubemapSkybox.frag");
-	
+	//Phongg Lighting
+	BPShader = std::make_shared<Shader>("Blinn-Phong.vert", "Blinn-Phong.frag");
 	//Point Light PBR Shader
 	PBRShader = std::make_shared<Shader>("PBR.vert", "PBR.frag");;
 	//Point Light PBR Textured Shader
@@ -45,10 +48,16 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 
 	nanosuit = std::make_shared<GameObject>(nanosuitShader, FPScamera, "resources/objects/nanosuit/nanosuit.obj", ScreenWidth, ScreenHeight);
 
+	//Blinn-Phong Spheres
+	spheresBP = std::make_shared<SphereClass>(BPShader, FPScamera, ScreenWidth, ScreenHeight);
+	spheresBP->initialiseSphere();
 	//PBR Spheres
-	spheres = std::make_shared<GameObject>(PBRShader, FPScamera, ScreenWidth, ScreenHeight);
+	spheresPBR = std::make_shared<SphereClass>(PBRShader, FPScamera, ScreenWidth, ScreenHeight);
+	spheresPBR->initialiseSphere();
 	//Textured PBR Spheres
-	texturedSpheres = std::make_shared<GameObject>(PBRShaderTextured, FPScamera, ScreenWidth, ScreenHeight);
+	texturedSpheresPBR = std::make_shared<SphereClass>(PBRShaderTextured, FPScamera, ScreenWidth, ScreenHeight);
+	texturedSpheresPBR->initaliseTextureSphere();
+
 
 	frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera, ScreenWidth, ScreenHeight);
 
@@ -78,9 +87,14 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 
 
 
+	BPShader->use();
+
 	lightColors.push_back(glm::vec3(150.0f, 150.0f, 150.0f));
 	lightColors.push_back(glm::vec3(150.0f, 150.0f, 150.0f));
 
+	BPShader->use();
+	BPShader->setVec3("objectColor",glm::vec3(0.5f, 0.0f, 0.0f));
+	BPShader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
 	//FrameBuffer for HDR Map set up
 
@@ -272,20 +286,28 @@ void Scene::loadSceneOne()
 		glActiveTexture(GL_TEXTURE4);
 		glBindTexture(GL_TEXTURE_2D, ao);
 
-		//spheres->useSphere();
-	
-		texturedSpheres->useTextureSphere();
-
+		//Blinn-Phong Spheres
+		spheresBP->useSphere();
+		BPShader->use();
+		BPShader->setVec3("lightPos", lightBoxes.at(0)->getPosition());
+		BPShader->setVec3("viewPos", FPScamera->GetPosition());
+		BPShader->setBool("blinn", blinn);
+		//PBR Spheres
+	//	spheresPBR->useSphere();
+		//texturedSpheresPBR->useTextureSphere();
+		
 
 		for (unsigned int i = 0; i <= 1; ++i)
 		{
+			PBRShader->use();
 			PBRShader->setVec3("lightPositions[" + std::to_string(i) + "]", lightBoxes.at(i)->getPosition());
 			PBRShader->setVec3("lightColors[" + std::to_string(i) + "]", lightColors.at(i));
 
+			PBRShaderTextured->use();
 			PBRShaderTextured->setVec3("lightPositions[" + std::to_string(i) + "]", lightBoxes.at(i)->getPosition());
 			PBRShaderTextured->setVec3("lightColors[" + std::to_string(i) + "]", lightColors.at(i));
 		}
-
+		
 		//skybox->use();
 
 		backgroundShader->use();
@@ -370,7 +392,14 @@ void Scene::processInput(GLFWwindow * window, std::shared_ptr<FrameBuffer> _fram
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		_framebuffer->setExposure(-0.01);
 
-
+	if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+	{
+		blinn = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		blinn = false;
+	}
 }
 
 int Scene::loadTexture(char const * path)

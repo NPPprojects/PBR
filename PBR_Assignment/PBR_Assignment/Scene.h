@@ -9,6 +9,7 @@
 #include "glm/ext.hpp"
 #include "FrameBuffer.h"
 #include "Skybox.h"
+#include "SphereClass.h"
 class Scene
 {
 public:
@@ -59,11 +60,15 @@ private:
 
 	std::shared_ptr<Shader> cubeMapSkyboxShader;
 
+	//Blinn-Phonng Shader
+	std::shared_ptr<Shader> BPShader;
+	bool blinn; //For switching between Blinn-Phong shading and Phong Shading
+	bool blinnKeyPressed;
 	//Point Light PBR
 	std::shared_ptr<Shader> PBRShader;
 	//Point Light PBR Textured
 	std::shared_ptr<Shader> PBRShaderTextured;
-
+	
 	//IBL Lighting
 	std::shared_ptr<Shader> equirectangularShader;
 	std::shared_ptr<Shader> backgroundShader;
@@ -77,16 +82,18 @@ private:
 
 	std::shared_ptr<GameObject> monster;
 	std::shared_ptr<GameObject> nanosuit;
-	
-	std::shared_ptr<GameObject> spheres;
-	std::shared_ptr<GameObject> texturedSpheres;
-
 	std::shared_ptr<ObjectClass> equirectangularCube;
 	std::shared_ptr<FrameBuffer> frameBuffer;
 
 
 	std::shared_ptr<Skybox> skybox;
 
+	//Spheres PBR
+	std::shared_ptr<SphereClass> spheresPBR;
+	std::shared_ptr<SphereClass> texturedSpheresPBR;
+
+	//Spheres Blinn-Phongg
+	std::shared_ptr<SphereClass> spheresBP;
 	//IBL Lighting Skybox
 
 
