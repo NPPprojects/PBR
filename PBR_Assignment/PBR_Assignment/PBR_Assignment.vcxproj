@@ -126,6 +126,8 @@
     <None Include="background.vert" />
     <None Include="Blinn-Phong.frag" />
     <None Include="Blinn-Phong.vert" />
+    <None Include="Blinn-PhongTextured.frag" />
+    <None Include="Blinn-PhongTextured.vert" />
     <None Include="ColorBox.data" />
     <None Include="ColorBox.frag" />
     <None Include="ColorBox.vert" />

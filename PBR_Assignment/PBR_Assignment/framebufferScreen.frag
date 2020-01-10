@@ -11,6 +11,7 @@ uniform float gamma;
 
 uniform float exposure;
 
+uniform bool filter;
 uniform int blurIntesity;
 void main()
 {
@@ -26,26 +27,39 @@ void main()
         vec2( 0.0f,   -offset), // bottom-center
         vec2( offset, -offset)  // bottom-right    
     );
+	float kernel[9];
+	if(filter ==true)
+	{
+			//Edges 
+	//		1,1,1,
+	//		1,-8,1,
+	//		1,1,1
 
-    float kernel[9] = float[](
+			//Default
+			kernel[0]=0;kernel[1]=0;kernel[2]=0;
+			kernel[3]=0;kernel[4]=1;kernel[5]=0;
+			kernel[6]=0;kernel[7]=0;kernel[8]=0;
+			//Blur
+			//1.0 / 16, 1 / 8, 1.0 / 16,
+			//1.0 / 8, 1.0 / blurIntesity, 1.0 / 8,
+			//1.0 / 16, 1.0 / 8, 1.0 / 16  
 
-//Edges 
-//1,1,1,
-//1,-8,1,
-//1,1,1
+		
+	}
+     	if(filter == false)
+	{
 
-//Default
-//0,0,0,
-//0,1,0,
-//0,0,0
+		//Edges 
+		kernel[0]=1;kernel[1]=1;kernel[2]=1;
+		kernel[3]=1;kernel[4]=-8;kernel[5]=1;
+		kernel[6]=1;kernel[7]=1;kernel[8]=1;
 
-//Blur
-1.0 / 16, 1 / 8, 1.0 / 16,
-1.0 / 8, 1.0 / blurIntesity, 1.0 / 8,
-1.0 / 16, 1.0 / 8, 1.0 / 16  
-
-    );
-     
+		//Blur
+		//1.0 / 16, 1 / 8, 1.0 / 16,
+		//1.0 / 8, 1.0 / blurIntesity, 1.0 / 8,
+		//1.0 / 16, 1.0 / 8, 1.0 / 16  
+	}
+   
     vec3 sampleTex[9];
     for(int i = 0; i < 9; i++)
     {
@@ -56,7 +70,6 @@ void main()
         col += sampleTex[i] * kernel[i];
     
 	// Exposure tone mapping
-
     vec3 mapped =  vec3(1.0) - exp(-col * exposure);
 	  // gamma correction 
     mapped = pow(mapped, vec3(1.0 / gamma));

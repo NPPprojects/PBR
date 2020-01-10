@@ -1,11 +1,2 @@
-﻿  SphereClass.cpp
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(34): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(74): warning C4018: '<': signed/unsigned mismatch
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(95): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(97): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(116): warning C4305: 'initializing': truncation from 'double' to 'float'
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(156): warning C4018: '<': signed/unsigned mismatch
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(180): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(182): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-h:\year3labs\computation and graphics\pbr\pbr_assignment\pbr_assignment\sphereclass.cpp(184): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+﻿  FrameBuffer.cpp
   PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

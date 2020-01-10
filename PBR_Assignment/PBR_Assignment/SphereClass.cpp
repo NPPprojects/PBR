@@ -219,8 +219,8 @@ void SphereClass::useSphere()
 	//objectShader->setMat4("model", model);
 
 	//Multiple
-	nrRows = 50;
-	nrColumns = 50;
+	nrRows = 7;
+	nrColumns = 7;
 	spacing = 2.5;
 
 	for (int row = 0; row < nrRows; ++row)
@@ -268,8 +268,8 @@ void SphereClass::useTextureSphere()
 	//objectShader->setMat4("model", model);
 
 	//Multiple
-	nrRows = 10;
-	nrColumns = 10;
+	nrRows = 7;
+	nrColumns = 7;
 	spacing = 2.5;
 
 	for (int row = 0; row < nrRows; ++row)

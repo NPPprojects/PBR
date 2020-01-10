@@ -62,6 +62,8 @@ private:
 
 	//Blinn-Phonng Shader
 	std::shared_ptr<Shader> BPShader;
+	//Blinn-Phong Textured Shader
+	std::shared_ptr<Shader> BPShaderTextured;
 	bool blinn; //For switching between Blinn-Phong shading and Phong Shading
 	bool blinnKeyPressed;
 	//Point Light PBR
@@ -76,6 +78,7 @@ private:
 	//Objects
 
 	std::shared_ptr<GameObject> LightBox;
+	std::shared_ptr<GameObject> textureCube;
 
 	std::vector<std::shared_ptr<GameObject>> lightBoxes;
 
@@ -94,6 +97,7 @@ private:
 
 	//Spheres Blinn-Phongg
 	std::shared_ptr<SphereClass> spheresBP;
+	std::shared_ptr<SphereClass> spheresBPTextured;
 	//IBL Lighting Skybox
 
 
@@ -109,6 +113,8 @@ private:
 	unsigned int roughness;
 	unsigned int ao;
 
+	unsigned int diffuse;
+	unsigned int specular;
 	//Light Brightness values
 	std::vector<glm::vec3> lightColors;
 

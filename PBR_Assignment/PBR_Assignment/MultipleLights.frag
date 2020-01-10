@@ -39,7 +39,7 @@ uniform Material material;
 uniform DirLight dirLight;
 
 //Look in to making this a uniform value
-#define NR_POINT_LIGHTS 4  
+#define NR_POINT_LIGHTS 4
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 // function prototypes
@@ -61,7 +61,7 @@ void main()
     
     
 	// phase 1: directional lighting
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec3 result = glm::vec3(0.0f,0.0f,0.0f);
     // phase 2: point lights
     for(int i = 0; i < NR_POINT_LIGHTS; i++){
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);    

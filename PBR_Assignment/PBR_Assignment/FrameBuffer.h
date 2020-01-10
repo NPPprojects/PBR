@@ -13,6 +13,7 @@ public:
 	float setGamma(float _gamma);
 	float setExposure(float _gamma);
   int setBlurIntesity(int _blurIntesity);
+  bool setFilter(bool _filter);
 private:
 	unsigned int frameBuffer;
 	unsigned int textureColorBuffer;
@@ -22,5 +23,6 @@ private:
   int blurIntesity;
 	float exposure;
 	float gamma;
+	bool filter;
 };
 

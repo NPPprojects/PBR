@@ -111,6 +111,12 @@
     <None Include="Blinn-Phong.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Blinn-PhongTextured.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Blinn-PhongTextured.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">

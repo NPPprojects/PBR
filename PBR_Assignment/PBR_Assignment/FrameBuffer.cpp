@@ -12,6 +12,8 @@ FrameBuffer::FrameBuffer(const char* _ObjectFile, std::shared_ptr <Shader> _obje
 	exposure = 0.5; 
   //default blur
   blurIntesity = 1;
+  //filer
+  filter = true;
 }
 
 FrameBuffer::~FrameBuffer()
@@ -60,6 +62,7 @@ void FrameBuffer::use()
 	objectShader->setFloat("gamma", gamma);
 	objectShader->setFloat("exposure", exposure);
   objectShader->setInt("blurIntesity", blurIntesity);
+  objectShader->setBool("filter", filter);
 }
 
 float FrameBuffer::setGamma(float _gamma)
@@ -78,4 +81,8 @@ int FrameBuffer::setBlurIntesity(int _blurIntesity)
 {
   std::cout << "Current Blur Intensity: " << blurIntesity << std::endl;
   return blurIntesity += _blurIntesity;
+}
+bool FrameBuffer::setFilter(bool _filter)
+{
+	return filter = _filter;
 }
