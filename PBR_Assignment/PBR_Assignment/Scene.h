@@ -39,6 +39,7 @@ private:
 	unsigned int cubeVAO;
 	unsigned int cubeVBO;
 
+	int numberOfSpheres;
 	//Screen Values
 	const unsigned int ScreenWidth = 800;
 	const unsigned int ScreenHeight = 800;
@@ -92,12 +93,12 @@ private:
 	std::shared_ptr<Skybox> skybox;
 
 	//Spheres PBR
-	std::shared_ptr<SphereClass> spheresPBR;
-	std::shared_ptr<SphereClass> texturedSpheresPBR;
+	std::vector<std::shared_ptr<SphereClass>> spheresPBR;
+	std::vector<std::shared_ptr<SphereClass>> texturedSpheresPBR;
 
 	//Spheres Blinn-Phongg
-	std::shared_ptr<SphereClass> spheresBP;
-	std::shared_ptr<SphereClass> spheresBPTextured;
+	std::vector<std::shared_ptr<SphereClass>> spheresBP;
+	std::vector<std::shared_ptr<SphereClass>> spheresBPTextured;
 	//IBL Lighting Skybox
 
 

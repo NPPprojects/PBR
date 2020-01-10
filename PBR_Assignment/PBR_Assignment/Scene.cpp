@@ -40,28 +40,41 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	//Objects
 
 	LightBox = std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight);
-	const char *textures[] = { "resources/textures/BetterBox.png" ,"resources/textures/BetterBox_spec.png"};
-	textureCube = std::make_shared<GameObject>("ColorBox.data", textures,2, BPShaderTextured, FPScamera, ScreenWidth, ScreenHeight);
-	for (int i = 0; i <= 1; i++)
+
+	
+
+	for (int i = 0; i < 2; i++)
 	{
 		lightBoxes.push_back(std::make_shared<GameObject>("LightBox.data", LightBoxShader, FPScamera, ScreenWidth, ScreenHeight));
 	}
 
-	
+	numberOfSpheres = 1;
 
 	//Blinn-Phong Spheres
-	spheresBP = std::make_shared<SphereClass>(BPShader, FPScamera, ScreenWidth, ScreenHeight);
-	spheresBP->initialiseSphere();
-	//Blinn-Phong Spheres Textured
-	spheresBPTextured = std::make_shared<SphereClass>(BPShaderTextured, FPScamera, ScreenWidth, ScreenHeight);
-	spheresBPTextured->initaliseTextureSphere();
-	//PBR Spheres
-	spheresPBR = std::make_shared<SphereClass>(PBRShader, FPScamera, ScreenWidth, ScreenHeight);
-	spheresPBR->initialiseSphere();
-	//Textured PBR Spheres
-	texturedSpheresPBR = std::make_shared<SphereClass>(PBRShaderTextured, FPScamera, ScreenWidth, ScreenHeight);
-	texturedSpheresPBR->initaliseTextureSphere();
 
+	for (int i = 0; i < numberOfSpheres; i++)
+	{
+		spheresBP.push_back(std::make_shared<SphereClass>(BPShader, FPScamera, ScreenWidth, ScreenHeight));
+		spheresBP.at(i)->initialiseSphere();
+	}
+	//Blinn-Phong Spheres Textured
+	for (int i = 0; i < numberOfSpheres; i++)
+	{
+		spheresBPTextured.push_back(std::make_shared<SphereClass>(BPShaderTextured, FPScamera, ScreenWidth, ScreenHeight));
+		spheresBPTextured.at(i)->initaliseTextureSphere();
+	}
+	//PBR Spheres
+	for (int i = 0; i < numberOfSpheres; i++)
+	{
+		spheresPBR.push_back(std::make_shared<SphereClass>(PBRShader, FPScamera, ScreenWidth, ScreenHeight));
+		spheresPBR.at(i)->initialiseSphere();
+	}
+	//Textured PBR Spheres
+	for (int i = 0; i < numberOfSpheres; i++)
+	{
+		texturedSpheresPBR.push_back(std::make_shared<SphereClass>(PBRShaderTextured, FPScamera, ScreenWidth, ScreenHeight));
+		texturedSpheresPBR.at(i)->initaliseTextureSphere();
+	}
 
 	frameBuffer = std::make_shared<FrameBuffer>("framebufferScreen.data", frameBufferShader, FPScamera, ScreenWidth, ScreenHeight);
 
@@ -106,7 +119,7 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	BPShader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
 	//FrameBuffer for HDR Map set up
-
+	/*
 	glGenFramebuffers(1, &captureFBO);
 	glGenRenderbuffers(1, &captureRBO);
 
@@ -199,6 +212,7 @@ void Scene::initalise(GLFWwindow* _window, std::shared_ptr<CameraObject> _camera
 	int scrWidth, scrHeight;
 	glfwGetFramebufferSize(window, &scrWidth, &scrHeight);
 	glViewport(0, 0, scrWidth, scrHeight);
+	*/
 	//Render Loop
 	
 }
@@ -280,7 +294,12 @@ void Scene::loadSceneOne()
 		{
 			case 1:
 			{
-				spheresBP->useSphere();
+				for (int i = 0; i < numberOfSpheres; i++)
+				{
+					spheresBP.at(i)->useSphere();
+					spheresBP.at(i)->setPosition(glm::vec3((i- numberOfSpheres/2)*2.5, 0.0f, 0.0f));
+					
+				}
 				BPShader->use();
 
 				glm::vec3 lightColor = glm::vec3(100.0f, 100.0f, 100.0f);
@@ -324,7 +343,12 @@ void Scene::loadSceneOne()
 				glBindTexture(GL_TEXTURE_2D, albedo);
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, specular);
-				spheresBPTextured->useTextureSphere();
+				for (int i = 0; i < numberOfSpheres; i++)
+				{
+					spheresBPTextured.at(i)->useTextureSphere();
+					spheresBPTextured.at(i)->setPosition(glm::vec3((i-numberOfSpheres/2 )*2.5, 0.0f, 0.0f));
+				}
+		
 				
 				for (unsigned int i = 0; i <= 1; ++i)
 				{
@@ -352,7 +376,12 @@ void Scene::loadSceneOne()
 			//PBR Spheres
 			case 3:
 			{
-				spheresPBR->useSphere();
+				for (int i = 0; i < numberOfSpheres; i++)
+				{
+					spheresPBR.at(i)->useSphere();;
+				
+				}
+				
 				for (unsigned int i = 0; i <= 1; ++i)
 				{
 					PBRShader->use();
@@ -379,7 +408,14 @@ void Scene::loadSceneOne()
 				glBindTexture(GL_TEXTURE_2D, roughness);
 				glActiveTexture(GL_TEXTURE4);
 				glBindTexture(GL_TEXTURE_2D, ao);
-				texturedSpheresPBR->useTextureSphere();
+
+				for (int i = 0; i < numberOfSpheres; i++)
+				{
+					texturedSpheresPBR.at(i)->useTextureSphere();
+			
+				}
+				
+				
 				for (unsigned int i = 0; i <= 1; ++i)
 				{
 					PBRShaderTextured->setVec3("lightPositions[" + std::to_string(i) + "]", lightBoxes.at(i)->getPosition());
@@ -393,13 +429,13 @@ void Scene::loadSceneOne()
 		}
 		//skybox->use();
 
-		backgroundShader->use();
-		backgroundShader->setMat4("view", view);
+		//backgroundShader->use();
+		//backgroundShader->setMat4("view", view);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-		//equirectangularCube->use3D();
 		
-		renderCube();
+		
+		
 
 		//now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

@@ -1,2 +1,26 @@
-﻿  FrameBuffer.cpp
-  PBR_Assignment.vcxproj -> H:\Year3Labs\Computation and Graphics\PBR\PBR_Assignment\Debug\PBR_Assignment.exe
+﻿  Scene.cpp
+d:\pbr\pbr_assignment\pbr_assignment\scene.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(327): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(487): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(489): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(491): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(493): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(508): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(510): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(512): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\pbr\pbr_assignment\pbr_assignment\scene.cpp(514): warning C4305: 'argument': truncation from 'double' to 'float'
+glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(monitor.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(vulkan.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(vulkan.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(window.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_init.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_joystick.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_joystick.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_monitor.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_monitor.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_time.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_time.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_tls.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_tls.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(win32_window.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(win32_window.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(wgl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(wgl_context.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+glfw3.lib(egl_context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(egl_context.obj)' or at 'D:\PBR\PBR_Assignment\Debug\glfw.pdb'; linking object as if no debug info
+  PBR_Assignment.vcxproj -> D:\PBR\PBR_Assignment\Debug\PBR_Assignment.exe

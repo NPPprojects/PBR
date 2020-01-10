@@ -19,6 +19,9 @@ SphereClass::~SphereClass()
 
 void SphereClass::initialiseSphere()
 {
+	position = glm::vec3(0.0f);
+	scale = glm::vec3(1.0f);
+
 	glGenVertexArrays(1, &VAO);
 
 	glGenBuffers(1, &VBO);
@@ -100,6 +103,8 @@ void SphereClass::initialiseSphere()
 
 void SphereClass::initaliseTextureSphere()
 {
+	position = glm::vec3(0.0f);
+	scale = glm::vec3(1.0f);
 
 	glGenVertexArrays(1, &VAO);
 
@@ -191,6 +196,22 @@ void SphereClass::setScreenParameters(int _screenWidth, int _screenHeight)
 	screenHeight = _screenHeight;
 }
 
+void SphereClass::setPosition(glm::vec3 _position)
+{
+	position = _position;
+}
+
+void SphereClass::setScale(glm::vec3 _scale)
+{
+	scale = _scale;
+}
+
+void SphereClass::updateModelMatrix()
+{
+	model = glm::translate(model,position);
+	model = glm::scale(model,scale);
+}
+
 void SphereClass::setShader(std::shared_ptr <Shader> _objectShader)
 {
 	objectShader = _objectShader;
@@ -215,24 +236,27 @@ void SphereClass::useSphere()
 	objectShader->setVec3("camPos", camera->GetPosition());
 
 	//1 Ball
-	//model = glm::mat4(1.0f);
-	//objectShader->setMat4("model", model);
+	model = glm::mat4(1.0f);
+	
 
 	//Multiple
-	nrRows = 7;
-	nrColumns = 7;
-	spacing = 2.5;
+	nrRows = 10;
+	nrColumns = 10;
+	spacing = 2.5f;
+
+	
+
 
 	for (int row = 0; row < nrRows; ++row)
 	{
 		objectShader->setFloat("metallic", (float)row / (float)nrRows);
 		for (int col = 0; col < nrColumns; ++col)
 		{
-			// we clamp the roughness to 0.025 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
-			// on direct lighting.
+		
 			objectShader->setFloat("roughness", glm::clamp((float)col / (float)nrColumns, 0.05f, 1.0f));
 
 			model = glm::mat4(1.0f);
+			
 			model = glm::translate(model, glm::vec3(
 				(col - (nrColumns / 2)) * spacing,
 				(row - (nrRows / 2)) * spacing,
@@ -242,12 +266,14 @@ void SphereClass::useSphere()
 			glBindVertexArray(VAO);
 			glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 		}
-
-
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 	}
-}
+		//objectShader->setFloat("metallic", 0.5f);
+		//objectShader->setFloat("roughness", 0.3f);
+		//objectShader->setMat4("model", model);
+		//glBindVertexArray(VAO);
+		//glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+	}
+
 
 void SphereClass::useTextureSphere()
 {
@@ -264,13 +290,13 @@ void SphereClass::useTextureSphere()
 	objectShader->setVec3("camPos", camera->GetPosition());
 
 	//1 Ball
-	//model = glm::mat4(1.0f);
-	//objectShader->setMat4("model", model);
+	model = glm::mat4(1.0f);
+
 
 	//Multiple
-	nrRows = 7;
-	nrColumns = 7;
-	spacing = 2.5;
+	nrRows = 10;
+	nrColumns = 10;
+	spacing = 2.5f;
 
 	for (int row = 0; row < nrRows; ++row)
 	{
@@ -288,9 +314,9 @@ void SphereClass::useTextureSphere()
 		}
 	}
 
-
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+	//objectShader->setMat4("model", model);
+	//glBindVertexArray(VAO);
+	//glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
 
 }
 

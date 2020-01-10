@@ -16,6 +16,12 @@ public:
 
 	void setScreenParameters(int _screenWidth, int _screenHeight);
 
+	void setPosition(glm::vec3 _position);
+
+	void setScale(glm::vec3 _scale);
+
+	void updateModelMatrix();
+
 	void setShader(std::shared_ptr<Shader> _objectShader);
 
 	void setCamera(std::shared_ptr<CameraObject> _camera);
@@ -34,6 +40,8 @@ private:
 	glm::mat4 view;
 	glm::mat4 projection;
 
+	glm::vec3 position;
+	glm::vec3 scale;
 	//Shader
 	std::shared_ptr <Shader> objectShader;
 
@@ -44,8 +52,8 @@ private:
 	int screenHeight;
 
 	//Collumn Rows and spacing for multiple spheres
-	int nrRows = 10;
-	int nrColumns = 10;
-	float spacing = 2.5;
+	int nrRows;
+	int nrColumns;
+	float spacing;
 };
 
